@@ -1,0 +1,29 @@
+<div class="main">
+    <div class="left">
+        <h1>Faça login</h1>
+        <img class="image" src="assets/svg/login-animate.svg">
+    </div>
+    <div class="right">
+        <form [formGroup]="loginForm" (ngSubmit)="logar()" class="card">
+            <h1>Login</h1>
+            <div class="textfield">
+                <label for="email">Email</label>
+                <input type="text" formControlName="email" placeholder="Email">
+                <p *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
+                    Email inválido.
+                </p>
+            </div>
+            <div class="textfield">
+                <label for="senha">Senha</label>
+                <input type="password" formControlName="senha" placeholder="Senha">
+            </div>
+            <p class="error-message">{{message}}</p>
+            <a [routerLink]="['/account-recovery']" class="forgot-password">Esqueci minha senha</a>
+            <a [routerLink]="['/cadastro']" class="register">Não possui conta? Registre-se.</a>
+            <button type="submit" [disabled]="!loginForm.valid || loading" class="submit">
+                <span *ngIf="!loading">Login</span>
+                <mat-spinner *ngIf="loading" diameter="20" color="accent"></mat-spinner>
+            </button>
+        </form>
+    </div>
+</div>

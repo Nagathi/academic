@@ -1,0 +1,29 @@
+<div class="card">
+    <form [formGroup]="enviarEmailForm" (ngSubmit)="enviarEmail()">
+        <h1 class="titulo-formulario">Enviar Email</h1>
+        <fieldset class="campos-formulario">
+          <div class="campo">
+            <input type="email" formControlName="email" placeholder="Escreva o seu email">
+            <p *ngIf="enviarEmailForm.get('email')?.invalid && enviarEmailForm.get('email')?.touched" class="error-message">
+              Email inválido.
+            </p>
+            <p *ngIf="notFound" class="error-message">
+              Email não encontrado.
+            </p>
+          </div>
+        </fieldset>
+        <span *ngIf="loading || contador > 0">Aguarde ({{ contador }}s)</span>
+        <button type="submit" [disabled]="!enviarEmailForm.valid || loading" class="btn-enviar">
+          <ng-container *ngIf="modo === 'recuperarSenha'">
+            <span *ngIf="!loading">Recuperar Senha</span>
+            <mat-spinner *ngIf="loading" diameter="20" color="accent"></mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="modo === 'confirmarEmail'">
+            <span *ngIf="!loading">Confirmar Email</span>
+            <mat-spinner *ngIf="loading" diameter="20" color="accent"></mat-spinner>
+          </ng-container>
+        </button>
+    </form>
+</div>
+
+  

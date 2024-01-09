@@ -1,0 +1,18 @@
+<div class="email-validator">
+  <div class="modal-content" *ngIf="valido">
+    <img src="assets/icons/gmail.png" alt="Ícone de Email" class="modal-image">
+    <p class="modal-message">Olá, seja bem-vindo à plataforma, agora você pode desfrutar dos diversos recursos que oferecemos. Faça login. :)</p>
+    <button class="confirm-button" [routerLink]="['/home']">
+      <ng-container *ngIf="!loadingHome">Página Inicial</ng-container>
+      <mat-spinner *ngIf="loadingHome" diameter="20" color="accent"></mat-spinner>
+    </button>
+  </div>
+  <div class="modal-content" *ngIf="!valido">
+    <img src="assets/icons/gmail.png" alt="Ícone de Email" class="modal-image">
+    <p class="modal-message">Parece que seu link é inválido, clique em reenviar e-mail para receber um novo link. :(</p>
+    <button class="confirm-button" (click)="reenviarEmail()">
+      <ng-container *ngIf="!loadingResend">Reenviar Email</ng-container>
+      <mat-spinner *ngIf="loadingResend" diameter="20" color="accent"></mat-spinner>
+    </button>
+  </div>
+</div>

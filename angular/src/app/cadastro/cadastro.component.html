@@ -1,0 +1,40 @@
+<div class="main">
+    <div class="left">
+        <h1>Cadastre-se</h1>
+        <img class="image" src="assets/svg/login-animate.svg">
+    </div>
+    <div class="right">
+        <form [formGroup]="registerForm" (ngSubmit)="cadastrar()" class="card">
+            <h1>Cadastro</h1>
+            <div class="textfield">
+                <label for="nome">Nome</label>
+                <input type="text" formControlName="nome" placeholder="Nome">
+            </div>
+            <div class="textfield">
+                <label for="usuario">Usuário</label>
+                <input type="text" formControlName="usuario" placeholder="Usuário">
+            </div>
+            <div class="textfield">
+                <label for="email">Email</label>
+                <input type="text" formControlName="email" placeholder="Email">
+                <p *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+                    Email inválido.
+                </p>
+            </div>
+            <div class="textfield">
+                <label for="senha">Senha</label>
+                <input type="password" formControlName="senha" placeholder="Senha">
+            </div>
+            <div class="textfield">
+                <label for="confirmarSenha">Confirmar Senha</label>
+                <input type="password" formControlName="confirmarSenha" placeholder="Confirmar Senha">
+            </div>
+            <p class="error-message">{{mensagem}}</p>
+            <a [routerLink]="['/login']" class="login">Já possui conta? Faça login.</a>
+            <button type="submit" [disabled]="!registerForm.valid || loading" class="submit">
+                <span *ngIf="!loading">Cadastro</span>
+                <mat-spinner *ngIf="loading" diameter="20" color="accent"></mat-spinner>
+            </button>
+        </form>
+    </div>
+</div>

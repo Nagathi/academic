@@ -1,0 +1,21 @@
+<header >
+  <div class="top" >
+    <a *ngIf="!isLogged" [routerLink]="['/cadastro']">Registre-se</a>
+    <a *ngIf="!isLogged" [routerLink]="['/login']">Faça login</a>
+    <a *ngIf="isLogged" (click)="sair()">Sair</a>
+  </div>
+  <div class="bottom">
+    <div class="container">
+      <img [routerLink]="['/home']" class="logo-icon" src="./assets/icons/logo.jpg">
+      <ul class="nav">
+        <li [routerLink]="['/home']">Início</li>
+        <li [routerLink]="['/perfil']" *ngIf="isLogged">Perfil</li>
+        <li [routerLink]="['/cadastro-disciplina']"*ngIf="isLogged">Nova Disciplina</li>
+      </ul>
+      <button class="search-button">
+        <input type="text" placeholder="Pesquisar" class="search-input">
+        <img src="./assets/icons/lupa.png" alt="Ícone de pesquisa" class="search-icon">
+      </button>
+    </div>
+  </div>
+</header>

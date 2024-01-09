@@ -1,0 +1,34 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+  
+.info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.info-ano {
+    margin-left: auto;
+    font-style: italic;
+    color: #888;
+  }
+  
+.foto-professor img {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+  
+.conteudo-item {
+    border: 3px solid #1F8F3E;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+li{
+    list-style-type: none;
+}
+  

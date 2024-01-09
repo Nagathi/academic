@@ -1,0 +1,28 @@
+<div class="feed">
+    <div class="header-feed">
+        <div class="h1-feed">
+            <h1>Feed de disciplinas</h1>
+        </div>
+    </div>
+    <div class="content">
+      <section *ngFor="let disciplina of getSectionsPorPagina()" id="conteudos">
+        <a>
+          <img class="img-content" [src]="disciplina.imagem">
+          <p class="p-nome">{{disciplina.nome}}</p>
+          <div class="p-usuario">
+            <img [src]="disciplina.usuario.imagem">
+            <p>{{disciplina.usuario.nome}}</p> 
+          </div>
+        </a>
+      </section>
+    </div>
+    <div class="pagination">
+      <button class="page-button" [disabled]="paginaAtual === 1" (click)="mudarPagina(paginaAtual - 1)">
+        Anterior
+      </button>
+      <span>{{ paginaAtual }} de {{ totalPaginas() }}</span>
+      <button class="page-button" [disabled]="paginaAtual === totalPaginas()" (click)="mudarPagina(paginaAtual + 1)">
+        Próxima
+      </button>
+    </div>
+</div>
