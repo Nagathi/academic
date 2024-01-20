@@ -1,4 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { HttpService } from '../services/http.service';
+import { environment } from 'src/environment';
 
 @Component({
   selector: 'app-perfil',
@@ -9,14 +11,25 @@ export class PerfilComponent {
   @ViewChild('filePicker') filePicker!: ElementRef<HTMLInputElement>;
   @ViewChild('imageDisplay') imageDisplay!: ElementRef<HTMLImageElement>;
 
+  private readonly apiUrl = environment.apiURL;
+
   foto = "assets/svg/avatar.svg";
-  nome = "Gustavo";
-  usuario = "gustavo00";
+  nome = "";
+  usuario = "";
 
   editar: boolean = false;
+  loading: boolean = false;
   disciplinas: any[] = []
   itensPorPagina = 6;
   paginaAtual = 1;
+
+  constructor(private http: HttpService){
+
+  }
+
+  ngOnInit(){
+    this.carregarDados();
+  }
 
   onClick() {
     this.editar = true;
@@ -52,6 +65,48 @@ export class PerfilComponent {
       };
       reader.readAsDataURL(inputElement.files[0]);
     }
+  }
+
+  carregarDados(){
+    this.http.carregarDados().subscribe(
+      (response: any) => {
+        if(response.foto != null){
+          this.foto = `${this.apiUrl}/images/usuarios/fotos/` + response.foto;
+        }
+
+        this.nome = response.nome;
+        this.usuario = response.usuario;
+      }
+    )
+  }
+
+  salvarDados() {
+    this.loading = true;
+    const token = localStorage.getItem("token");
+    const formData: FormData = new FormData();
+
+    if (token !== null) {
+      formData.append('token', token);
+    }
+
+    formData.append('nome', this.nome);
+    formData.append('usuario', this.usuario);
+
+    if (this.filePicker.nativeElement.files && this.filePicker.nativeElement.files[0]) {
+        formData.append('foto', this.filePicker.nativeElement.files[0]);
+    }
+  
+    this.http.salvarDados(formData).subscribe(
+      (response: any) => {
+        console.log('Dados salvos com sucesso!');
+        this.editar = false;
+        this.loading = false;
+      },
+      (error: any) => {
+        console.error('Erro ao salvar dados:', error);
+        this.loading = false;
+      }
+    );
   }
 
 }

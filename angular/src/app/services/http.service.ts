@@ -1,8 +1,9 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environment';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -191,5 +192,15 @@ export class HttpService {
         }
       );
     });
+  }
+
+  carregarDados(){
+    const token = localStorage.getItem("token");
+
+    return this.http.get(`${this.apiUrl}/usuario/perfil/${token}`);
+  }
+
+  salvarDados(dados: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/usuario/dados`, dados);
   }
 }

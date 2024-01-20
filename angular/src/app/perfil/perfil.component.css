@@ -67,9 +67,9 @@
 }
 
 .perfil img{
-    display: flex   ;
-    width: 80%;
-    align-self: center;
+    display: flex;
+    width: 30%;
+    width: 30%;
 }
 
 .botao-sobreposto img{
@@ -133,6 +133,8 @@ label{
 .btn.btn-secondary{
     height: 50%;
     background-color: var(--verde-primario);
+    display: flex;
+    justify-content: center;
 }
 
 .upload{
@@ -147,20 +149,21 @@ label{
     justify-self: center;
 }
 
-.perfil img{
+.perfil img {
     align-self: center;
     width: 150px;
-    height: auto;
+    height: 150px;
     border-radius: 50%;
-}
-
-.editar img{
+    object-fit: cover;
+  }
+  
+  .editar img {
     align-self: center;
     width: 150px;
-    height: auto;
+    height: 150px;
     border-radius: 50%;
-}
-
+    object-fit: cover;
+  }
 
 .salvos{
     width: 100%;

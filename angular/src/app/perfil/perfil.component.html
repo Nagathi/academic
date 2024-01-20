@@ -7,7 +7,6 @@
     </div>
   
     <div class="editar" *ngIf="editar">
-  
         <input type="file" accept="image/*" (change)="carregarImagem($event)" id="fileInput" style="display: none;" #filePicker />
         <img [src]="foto" style="max-width: 100%; height: auto; display: none;" #imageDisplay />
         <button class="btn btn-primary w-100" (click)="filePicker.click()">Upload de Imagem</button>
@@ -20,8 +19,11 @@
             <input type="text" class="form-control" [(ngModel)]="usuario" name="usuario">
     
             <div class="btns">
-            <button class="btn btn-primary w-100" (click)="cancelar()">Cancelar</button>
-            <button class="btn btn-secondary w-100">Salvar</button>
+              <button class="btn btn-primary w-100" (click)="cancelar()">Cancelar</button>
+              <button class="btn btn-secondary w-100" (click)="salvarDados()">
+                <span *ngIf="!loading">Salvar</span>
+                <mat-spinner *ngIf="loading" diameter="20" color="accent"></mat-spinner>
+              </button>
             </div>
         </form>
     </div>

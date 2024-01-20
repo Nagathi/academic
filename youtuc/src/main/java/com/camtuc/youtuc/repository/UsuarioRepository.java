@@ -14,4 +14,5 @@ public interface UsuarioRepository extends CrudRepository <UsuarioModel, String>
     Optional<UsuarioModel> findByEmail(String email);
     Optional<UsuarioModel> findByEmailAndSenha(String email, String senha);
     Optional<UsuarioModel> findByUsuario(String usuario);
+    boolean existsByUsuario(String usuario);
 }
