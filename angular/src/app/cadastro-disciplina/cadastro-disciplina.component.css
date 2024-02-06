@@ -25,69 +25,12 @@ form {
     box-sizing: border-box;
   }
   
-  input[type='file'] {
-    margin-top: 5px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    width: calc(100% - 34px);
-    box-sizing: border-box;
-    display: inline-block;
-    vertical-align: middle;
-  }
-  
-  input[type='file']::file-selector-button {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-left: none;
-    border-radius: 0 3px 3px 0;
-    background-color: #f9f9f9;
-    color: #333;
-    cursor: pointer;
-  }
-  
-  input[type='file']::-webkit-file-upload-button {
-    display: none;
-  }
-  
-  input[type='file']::before {
-    content: 'Texto ou Arquivo';
-    display: inline-block;
-    width: calc(100% - 25px);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    margin-right: 5px;
-  }
-  
-  button[type='button'] {
+  button[type='submit'] {
     background-color: var(--verde-primario);
     color: white;
     border: none;
     border-radius: 3px;
     padding: 5px 10px;
     cursor: pointer;
-  }
-  
-  .conteudo-exibido {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 3px;
-  }
-  
-  .conteudo-exibido h3 {
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
-  
-  .conteudo-exibido p {
-    margin-bottom: 5px;
-  }
-  
-  .conteudo-exibido hr {
-    border-top: 1px solid #ccc;
-    margin: 10px 0;
   }
   

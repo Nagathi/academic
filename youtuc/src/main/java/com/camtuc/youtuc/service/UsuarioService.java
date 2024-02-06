@@ -56,11 +56,10 @@ public class UsuarioService {
     
                     if (dadosDTO.getFoto() != null) {
                         String diretorioAtual = System.getProperty("user.dir");
-                        String caminhoRelativo = "/youtuc/src/media/images/usuarios/fotos/";
+                        String caminhoRelativo = "/youtuc/src/media/usuarios/fotos/";
                         String caminhoAbsoluto = diretorioAtual + caminhoRelativo;
-                        String caminhoFinal = caminhoAbsoluto;
 
-                        String uploadImagem = caminhoFinal;
+                        String uploadImagem = caminhoAbsoluto;
                         String uniqueImageName = UUID.randomUUID().toString() + "_" + dadosDTO.getFoto().getOriginalFilename();
     
                         Path destinoImagem = Path.of(uploadImagem, uniqueImageName);

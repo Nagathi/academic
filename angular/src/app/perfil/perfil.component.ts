@@ -29,6 +29,7 @@ export class PerfilComponent {
 
   ngOnInit(){
     this.carregarDados();
+    this.carregarDisciplinas();
   }
 
   onClick() {
@@ -71,7 +72,7 @@ export class PerfilComponent {
     this.http.carregarDados().subscribe(
       (response: any) => {
         if(response.foto != null){
-          this.foto = `${this.apiUrl}/images/usuarios/fotos/` + response.foto;
+          this.foto = `${this.apiUrl}/usuarios/fotos/` + response.foto;
         }
 
         this.nome = response.nome;
@@ -98,7 +99,6 @@ export class PerfilComponent {
   
     this.http.salvarDados(formData).subscribe(
       (response: any) => {
-        console.log('Dados salvos com sucesso!');
         this.editar = false;
         this.loading = false;
       },
@@ -107,6 +107,20 @@ export class PerfilComponent {
         this.loading = false;
       }
     );
+  }
+
+  carregarDisciplinas(){
+    this.http.carregarMinhasDisciplinas().subscribe(
+      response => {
+        this.disciplinas = response;
+
+        this.disciplinas.forEach(disciplina => {
+          if (disciplina.foto !== null) {
+            disciplina.foto = `${this.apiUrl}/disciplinas/` + disciplina.foto;
+          }
+        });
+      }
+    )
   }
 
 }

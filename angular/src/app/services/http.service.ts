@@ -203,4 +203,9 @@ export class HttpService {
   salvarDados(dados: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/usuario/dados`, dados);
   }
+
+  carregarMinhasDisciplinas(){
+    const token = localStorage.getItem("token");
+    return this.http.get<[]>(`${this.apiUrl}/disciplina/minhas-disciplinas/${token}`);
+  }
 }

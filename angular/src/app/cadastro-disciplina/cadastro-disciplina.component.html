@@ -1,37 +1,12 @@
 <form [formGroup]="disciplinaForm" (ngSubmit)="salvarDisciplina()">
-    <label for="nomeDisciplina">Nome da Disciplina:</label>
-    <input type="text" id="nomeDisciplina" formControlName="nomeDisciplina" />
-  
-    <label for="ano">Ano:</label>
-    <input type="number" id="ano" formControlName="ano" />
-  
-    <div *ngFor="let conteudo of conteudos; let i = index" class="conteudo-item">
-      <div>
-        <label for="titulo{{ i }}">Título:</label>
-        <input type="text" id="titulo{{ i }}" [formControlName]="'titulo' + i" />
-      </div>
-      <div>
-        <label for="anexo{{ i }}">Anexo:</label>
-        <input type="file" id="anexo{{ i }}" [formControlName]="'anexo' + i" />
-      </div>
-      <div>
-        <label for="descricao{{ i }}">Descrição:</label>
-        <textarea id="descricao{{ i }}" [formControlName]="'descricao' + i"></textarea>
-      </div>
-      <div class="acao">
-        <button type="button" (click)="removerConteudo(i)">Remover</button>
-        <button type="button" (click)="toggleInputType(i)">Alterar Entrada</button>
-      </div>
-    </div>
-  
-    <button type="button" (click)="adicionarConteudo()">Adicionar Conteúdo</button>
-    <button type="submit">Salvar</button>
-  </form>
-  
-  <div *ngFor="let conteudo of conteudos" class="conteudo-exibido">
-    <h3>{{ conteudo.titulo }}</h3>
-    <p>{{ conteudo.descricao }}</p>
-    <p *ngIf="!isString(conteudo.anexo)">Anexo: {{ conteudo.anexo }}</p>
-    <hr />
-  </div>
-  
+  <label for="foto">Foto:</label>
+  <input type="file" id="foto" formControlName="foto" accept="image/*" />
+
+  <label for="nomeDisciplina">Nome da Disciplina:</label>
+  <input type="text" id="nomeDisciplina" formControlName="nomeDisciplina" />
+
+  <label for="ano">Ano:</label>
+  <input type="number" id="ano" formControlName="ano" />
+
+  <button type="submit">Salvar</button>
+</form>

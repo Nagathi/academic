@@ -16,8 +16,12 @@ import lombok.Setter;
 @Setter
 public class DisciplinaModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String foto;
+    private String titulo;
+    private String ano;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
