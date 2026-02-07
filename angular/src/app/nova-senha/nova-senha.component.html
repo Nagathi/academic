@@ -1,0 +1,23 @@
+<div class="card">
+    <form [formGroup]="resetSenhaForm" (ngSubmit)="redefinirSenha()">
+      <h1 class="titulo-formulario">Redefinir Senha</h1>
+      <fieldset class="campos-formulario">
+        <div class="campo">
+          <input type="password" formControlName="senha" placeholder="Nova Senha">
+        </div>
+        <div class="campo">
+          <input type="password" formControlName="confirmarSenha" placeholder="Confirmar Senha">
+          <p *ngIf="resetSenhaForm.hasError('senhasDiferentes') && resetSenhaForm.get('confirmarSenha')?.touched" class="error-message">
+            As senhas não coincidem.
+          </p>
+        </div>
+      </fieldset>
+      <button type="submit" [disabled]="!resetSenhaForm.valid || loading" class="btn-enviar">
+        <ng-container *ngIf="!loading; else loadingSpinner">Redefinir Senha</ng-container>
+        <ng-template #loadingSpinner>
+          <mat-spinner diameter="20" color="accent"></mat-spinner>
+        </ng-template>
+      </button>
+    </form>
+</div>
+  

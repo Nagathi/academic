@@ -1,0 +1,19 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+:root {
+    --verde-primario: #1F8F3E;
+    --verde-secundario: #6deb91;
+    --azul-btn-hover: #D4E4FA;
+    --azul-btn-hover-1: #5595E9;
+    --verde-fraco: #daf3e2;
+    --azul: #2A7AE4;
+    --preto: #464646;
+    --branco-secundario: #f5f5f5;
+    --branco-primario: #FFFFFF;
+    --cinza: #A2A2A2;
+    --verde: #007600;
+    --vermelho: #DD0000;
+    --laranja: #c45500;
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

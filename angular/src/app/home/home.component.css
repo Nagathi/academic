@@ -1,0 +1,13 @@
+.menu{
+    display: flex;
+    flex-direction: row;
+}
+
+app-card{
+    margin-left: 30px;
+    width: 20%;
+}
+
+app-feed{
+    width: 60%;
+}

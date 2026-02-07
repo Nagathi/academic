@@ -1,0 +1,62 @@
+<div class="geral">
+    <div class="perfil" *ngIf="!editar">
+      <img [src]="foto">
+      <label>{{nome}}</label>
+      <label>@{{usuario}}</label>
+      <button (click)="onClick()" class="btn btn-primary w-100">Editar perfil</button>
+    </div>
+  
+    <div class="editar" *ngIf="editar">
+        <input type="file" accept="image/*" (change)="carregarImagem($event)" id="fileInput" style="display: none;" #filePicker />
+        <img [src]="foto" style="max-width: 100%; height: auto; display: none;" #imageDisplay />
+        <button class="btn btn-primary w-100" (click)="filePicker.click()">Upload de Imagem</button>
+        
+        <form class="form">
+            <label style="font-weight: bold;">Nome</label>
+            <input type="text" class="form-control" [(ngModel)]="nome" name="nome">
+    
+            <label style="font-weight: bold;">Usuário</label>
+            <input type="text" class="form-control" [(ngModel)]="usuario" name="usuario">
+    
+            <div class="btns">
+              <button class="btn btn-primary w-100" (click)="cancelar()">Cancelar</button>
+              <button class="btn btn-secondary w-100" (click)="salvarDados()">
+                <span *ngIf="!loading">Salvar</span>
+                <mat-spinner *ngIf="loading" diameter="20" color="accent"></mat-spinner>
+              </button>
+            </div>
+        </form>
+    </div>
+  
+    <div class="destaques">
+      <div class="barra-links">
+        <a  class="link">Destaques</a>
+        <a  class="link">Salvos</a>
+      </div>
+
+      <div class="destaque-content">
+        <div class="salvos">
+          <div class="imagens">
+            <section id="conteudos" *ngFor="let disciplina of getSectionsPorPagina()">
+              <a>
+                <section class="conteudo">
+                  <img class="img-content" [src]="disciplina.foto">
+                  <p class="p-nome">{{disciplina.titulo}}</p>
+                  <div class="p-usuario"><img [src]="foto"><p>{{disciplina.nome}}</p></div>
+                </section>
+              </a>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="pagination">
+        <button class="page-button" [disabled]="paginaAtual === 1" (click)="mudarPagina(paginaAtual - 1)">
+          Anterior
+        </button>
+        <span>{{ paginaAtual }} de {{ totalPaginas() }}</span>
+        <button class="page-button" [disabled]="paginaAtual === totalPaginas()" (click)="mudarPagina(paginaAtual + 1)">
+          Próxima
+        </button>
+      </div>
+    </div>
+</div>

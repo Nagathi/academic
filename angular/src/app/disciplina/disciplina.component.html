@@ -1,0 +1,26 @@
+<div class="container">
+    <h1>{{ nomeDisciplina }}</h1>
+    <div class="info">
+        <div class="foto-professor">
+            <img src="caminho-para-sua-imagem" alt="Foto do Professor" />
+        </div>
+        <div class="info-professor">
+            <h3>{{ nomeProfessor }}</h3>
+        </div>
+        <div class="info-ano">
+            <p>Ano: {{ anoMinistracao }}</p>
+        </div>
+    </div>
+    <div class="conteudos">
+      <h2>Conteúdos</h2>
+      <ul>
+        <li *ngFor="let conteudo of conteudos">
+          <div class="conteudo-item">
+            <p>{{ conteudo.titulo }}</p>
+            <p>{{ conteudo.descricao }}</p>
+            <p>{{ conteudo.anexo }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>

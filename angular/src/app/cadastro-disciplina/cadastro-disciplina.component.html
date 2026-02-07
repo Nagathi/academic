@@ -1,0 +1,12 @@
+<form [formGroup]="disciplinaForm" (ngSubmit)="salvarDisciplina()">
+  <label for="foto">Foto:</label>
+  <input type="file" id="foto" formControlName="foto" accept="image/*" (change)="onFotoSelecionada($event)" />
+
+  <label for="titulo">Nome da Disciplina:</label>
+  <input type="text" id="titulo" formControlName="titulo" />
+
+  <label for="ano">Ano:</label>
+  <input type="number" id="ano" formControlName="ano" />
+
+  <button type="submit">Salvar</button>
+</form>
