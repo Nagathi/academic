@@ -10,8 +10,11 @@ import { Observable } from 'rxjs';
 })
 export class HttpService {
   private readonly apiUrl = environment.apiURL;
+  private readonly CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutos
 
   token: string = "";
+  private disciplinasCache: any[] | null = null;
+  private disciplinasCacheTimestamp: number = 0;
 
   constructor(private http: HttpClient,
               private auth: AuthService,
@@ -230,6 +233,34 @@ export class HttpService {
         }
       );
     });
+  }
+
+  getListaDisciplinas(): Promise<any[]> {
+    return new Promise<any[]>((resolve, reject) => {
+      const agora = Date.now();
+      const cacheValido = this.disciplinasCache && (agora - this.disciplinasCacheTimestamp) < this.CACHE_TTL_MS;
+
+      if (cacheValido) {
+        resolve(this.disciplinasCache!);
+        return;
+      }
+
+      this.http.get<any[]>(`${this.apiUrl}/disciplina/lista-disciplinas`).subscribe(
+        (response: any[]) => {
+          this.disciplinasCache = response;
+          this.disciplinasCacheTimestamp = agora;
+          resolve(response);
+        },
+        (error: HttpErrorResponse) => {
+          reject('Erro ao carregar disciplinas.');
+        }
+      );
+    });
+  }
+
+  limparCacheDisciplinas(): void {
+    this.disciplinasCache = null;
+    this.disciplinasCacheTimestamp = 0;
   }
   
 }

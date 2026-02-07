@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
+import { HttpService } from 'src/app/services/http.service';
+import { environment } from 'src/environment';
 
 interface Disciplina {
   id: number;
-  imagem: string;
-  nome: string;
-  usuario: {
-    nome: string;
-    imagem: string;
-  };
+  foto: string;
+  titulo: string;
+  autor: string;
 }
 
 @Component({
@@ -19,122 +18,15 @@ export class FeedComponent {
   itensPorPagina = 6;
   paginaAtual = 1;
 
-  disciplinas: Disciplina[] = [
-    {
-      id: 1,
-      imagem: 'caminho/para/imagem1.jpg',
-      nome: 'Matemática',
-      usuario: {
-        nome: 'João',
-        imagem: 'caminho/para/imagem-usuario1.jpg'
-      }
-    },
-    {
-      id: 2,
-      imagem: 'caminho/para/imagem2.jpg',
-      nome: 'História',
-      usuario: {
-        nome: 'Maria',
-        imagem: 'caminho/para/imagem-usuario2.jpg'
-      }
-    },
-    {
-      id: 1,
-      imagem: 'caminho/para/imagem1.jpg',
-      nome: 'Matemática',
-      usuario: {
-        nome: 'João',
-        imagem: 'caminho/para/imagem-usuario1.jpg'
-      }
-    },
-    {
-      id: 2,
-      imagem: 'caminho/para/imagem2.jpg',
-      nome: 'História',
-      usuario: {
-        nome: 'Maria',
-        imagem: 'caminho/para/imagem-usuario2.jpg'
-      }
-    },
-    {
-      id: 1,
-      imagem: 'caminho/para/imagem1.jpg',
-      nome: 'Matemática',
-      usuario: {
-        nome: 'João',
-        imagem: 'caminho/para/imagem-usuario1.jpg'
-      }
-    },
-    {
-      id: 2,
-      imagem: 'caminho/para/imagem2.jpg',
-      nome: 'História',
-      usuario: {
-        nome: 'Maria',
-        imagem: 'caminho/para/imagem-usuario2.jpg'
-      }
-    },
-    {
-      id: 1,
-      imagem: 'caminho/para/imagem1.jpg',
-      nome: 'Matemática',
-      usuario: {
-        nome: 'João',
-        imagem: 'caminho/para/imagem-usuario1.jpg'
-      }
-    },
-    {
-      id: 2,
-      imagem: 'caminho/para/imagem2.jpg',
-      nome: 'História',
-      usuario: {
-        nome: 'Maria',
-        imagem: 'caminho/para/imagem-usuario2.jpg'
-      }
-    },
-    {
-      id: 1,
-      imagem: 'caminho/para/imagem1.jpg',
-      nome: 'Matemática',
-      usuario: {
-        nome: 'João',
-        imagem: 'caminho/para/imagem-usuario1.jpg'
-      }
-    },
-    {
-      id: 2,
-      imagem: 'caminho/para/imagem2.jpg',
-      nome: 'História',
-      usuario: {
-        nome: 'Maria',
-        imagem: 'caminho/para/imagem-usuario2.jpg'
-      }
-    },
-    {
-      id: 1,
-      imagem: 'caminho/para/imagem1.jpg',
-      nome: 'Matemática',
-      usuario: {
-        nome: 'João',
-        imagem: 'caminho/para/imagem-usuario1.jpg'
-      }
-    },
-    {
-      id: 2,
-      imagem: 'caminho/para/imagem2.jpg',
-      nome: 'História',
-      usuario: {
-        nome: 'Maria',
-        imagem: 'caminho/para/imagem-usuario2.jpg'
-      }
-    },
-  ];
+  disciplinas: Disciplina[] = [];
 
-  constructor(){
+  constructor(private http: HttpService) {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+      this.listarDisciplinas();
+  }
 
   getSectionsPorPagina(): any[] {
     const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
@@ -151,4 +43,22 @@ export class FeedComponent {
       this.paginaAtual = pagina;
     }
   }
+
+  
+
+  listarDisciplinas(): void {
+    this.http.getListaDisciplinas().then(
+      (response) => {
+        this.disciplinas = response.map(disciplina => ({
+          ...disciplina,
+          foto: `${environment.apiURL}/disciplinas/${disciplina.foto}`
+        }));
+        console.log(this.disciplinas);
+      },
+      (error) => {
+        alert('Ocorreu um erro ao carregar as disciplinas. Por favor, tente novamente mais tarde.');
+      }
+    );  
+  }
+
 }

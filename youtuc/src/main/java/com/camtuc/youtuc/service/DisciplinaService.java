@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.camtuc.youtuc.dto.BannerDisciplinaDTO;
 import com.camtuc.youtuc.dto.DisciplinaDTO;
 import com.camtuc.youtuc.dto.SectionDisciplinaDTO;
 import com.camtuc.youtuc.model.DisciplinaModel;
@@ -53,7 +54,7 @@ public class DisciplinaService {
                 Long id = disciplinaSalva.getId();
 
                 String diretorioAtual = System.getProperty("user.dir");
-                String caminhoRelativo = "/youtuc/src/media/disciplinas/Disciplina " + id;
+                String caminhoRelativo = "/youtuc/src/media/disciplinas/Disciplina" + id;
                 String caminhoAbsoluto = diretorioAtual + caminhoRelativo;
 
                 File novaPasta = new File(caminhoAbsoluto);
@@ -69,7 +70,7 @@ public class DisciplinaService {
                     Path destinoImagem = Path.of(uploadImagem, uniqueImageName);
                     Files.copy(disciplinaDTO.getFoto().getInputStream(), destinoImagem, StandardCopyOption.REPLACE_EXISTING);
 
-                    disciplinaSalva.setFoto("Disciplina #" + id + "/" + uniqueImageName);
+                    disciplinaSalva.setFoto("Disciplina" + id + "/" + uniqueImageName);
 
                     disciplinaRepository.save(disciplinaSalva);
                 }
@@ -105,7 +106,7 @@ public class DisciplinaService {
                 SectionDisciplinaDTO disciplinaDTO = new SectionDisciplinaDTO();
 
                 disciplinaDTO.setId(disciplina.getId());
-                disciplinaDTO.setFoto(disciplina.getFoto());
+                disciplinaDTO.setFoto("/media/disciplinas/"+disciplina.getFoto());
                 disciplinaDTO.setTitulo(disciplina.getTitulo());
                 disciplinaDTO.setAno(disciplina.getAno());
                 disciplinaDTO.setNome(disciplina.getUsuario().getNome());
@@ -117,6 +118,29 @@ public class DisciplinaService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    public ResponseEntity<?> obterDisciplinas(){
+
+        Iterable<DisciplinaModel> all = disciplinaRepository.findAll();
+        List<DisciplinaModel> list = new ArrayList<>();
+        all.forEach(list::add);
+
+        List<BannerDisciplinaDTO> disciplinasDTO = new ArrayList<>();
+
+        list.stream().limit(100).forEach(disciplina -> {
+            BannerDisciplinaDTO dto = new BannerDisciplinaDTO();
+            dto.setFoto(disciplina.getFoto());
+            dto.setTitulo(disciplina.getTitulo());
+            dto.setAno(disciplina.getAno());
+            dto.setAutor(disciplina.getUsuario().getNome());
+            disciplinasDTO.add(dto);
+        });
+
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(disciplinasDTO);
+
     }
     
 }

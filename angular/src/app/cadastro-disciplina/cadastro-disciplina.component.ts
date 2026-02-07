@@ -30,7 +30,6 @@ export class CadastroDisciplinaComponent implements OnInit {
   }
   
   salvarDisciplina(): void {
-    // Monta FormData para envio multipart/form-data
     const formData = new FormData();
     formData.append('titulo', this.disciplinaForm.get('titulo')?.value || '');
     formData.append('ano', this.disciplinaForm.get('ano')?.value || '');

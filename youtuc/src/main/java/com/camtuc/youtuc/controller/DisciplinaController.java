@@ -26,9 +26,8 @@ public class DisciplinaController {
                                          @RequestParam("ano") String ano,
                                          @RequestParam("token") String token,
                                          @RequestPart(value = "foto", required = false) MultipartFile foto){
-        // Validações básicas do arquivo (tamanho e tipo)
         if (foto != null && !foto.isEmpty()) {
-            long maxBytes = 50L * 1024L * 1024L; // 50 MB
+            long maxBytes = 50L * 1024L * 1024L;
             if (foto.getSize() > maxBytes) {
                 return ResponseEntity.status(413).body("Arquivo muito grande. Tamanho máximo permitido: 50MB");
             }
@@ -58,5 +57,11 @@ public class DisciplinaController {
     public ResponseEntity<?> obterDisciplinasPorUsuario(@PathVariable String token){
         
         return disciplinaService.obterDisciplinasPorUsuario(token);
+    }
+
+    @GetMapping("/lista-disciplinas")
+    public ResponseEntity<?> obterDisciplinas(){
+        
+        return disciplinaService.obterDisciplinas();
     }
 }

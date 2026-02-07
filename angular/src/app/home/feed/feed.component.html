@@ -7,11 +7,10 @@
     <div class="content">
       <section *ngFor="let disciplina of getSectionsPorPagina()" id="conteudos">
         <a>
-          <img class="img-content" [src]="disciplina.imagem">
-          <p class="p-nome">{{disciplina.nome}}</p>
+          <img class="img-content" [src]="disciplina.foto">
+          <p class="p-nome">{{disciplina.titulo}}</p>
           <div class="p-usuario">
-            <img [src]="disciplina.usuario.imagem">
-            <p>{{disciplina.usuario.nome}}</p> 
+            <p>{{disciplina.autor}}</p> 
           </div>
         </a>
       </section>
