@@ -133,6 +133,7 @@ public class DisciplinaService {
 
         list.stream().limit(100).forEach(disciplina -> {
             BannerDisciplinaDTO dto = new BannerDisciplinaDTO();
+            dto.setId(disciplina.getId());
             dto.setImagem(disciplina.getImagem());
             dto.setTitulo(disciplina.getTitulo());
             dto.setAno(disciplina.getAno());

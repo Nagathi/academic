@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BannerDisciplinaDTO {
+    private Long id;
     private String imagem;
     private String titulo;
     private String ano;

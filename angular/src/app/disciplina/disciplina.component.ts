@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { environment } from 'src/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-disciplina',
@@ -67,10 +68,16 @@ export class DisciplinaComponent {
     }
   ];
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, 
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.http.verDisciplina(5).then(
+    let id: any = 0;
+    this.route.queryParamMap.subscribe(params => {
+      id = params.get('d');
+    });
+
+    this.http.verDisciplina(id).then(
       (response: any) => {
         this.nomeDisciplina = response.titulo;
         this.nomeProfessor = response.autor;
