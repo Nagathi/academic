@@ -4,8 +4,10 @@ import { environment } from 'src/environment';
 
 interface Disciplina {
   id: number;
-  foto: string;
+  imagem: string;
   titulo: string;
+  ano: string;
+  foto: string;
   autor: string;
 }
 
@@ -48,17 +50,24 @@ export class FeedComponent {
 
   listarDisciplinas(): void {
     this.http.getListaDisciplinas().then(
-      (response) => {
-        this.disciplinas = response.map(disciplina => ({
-          ...disciplina,
-          foto: `${environment.apiURL}/disciplinas/${disciplina.foto}`
-        }));
-        console.log(this.disciplinas);
+      (response: any) => {
+        if (Array.isArray(response)) {
+          this.disciplinas = response.map((disciplina: any) => ({
+            id: disciplina.id,
+            imagem: disciplina.imagem ? `${ environment.apiURL}/disciplinas/${disciplina.imagem}` : '',
+            titulo: disciplina.titulo,
+            ano: disciplina.ano,
+            foto: disciplina.foto ? `${environment.apiURL}/usuarios/fotos/${disciplina.foto}` : '',
+            autor: disciplina.autor
+
+          }));
+        }
       },
       (error) => {
+        console.error('Erro ao carregar disciplinas:', error);
         alert('Ocorreu um erro ao carregar as disciplinas. Por favor, tente novamente mais tarde.');
       }
-    );  
+    );
   }
 
 }

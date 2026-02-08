@@ -48,7 +48,7 @@
   
   .link {
     text-decoration: none;
-    color: #000;
+    color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -155,107 +155,257 @@ label{
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-  }
+}
   
-  .editar img {
+.editar img {
     align-self: center;
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-  }
-
-.salvos{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
-.imagens {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+.destaques {
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 40px;
+  border-radius: 12px;
+  margin-bottom: 60px;
 }
 
-.titulo{
-    display: flex;
-    width: 100%;
-    height: 80px;
+.destaques-titulo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e3c72;
+  margin: 0 0 30px 0;
+  padding-bottom: 15px;
+  border-bottom: 3px solid var(--verde-primario, #27ae60);
 }
 
-.salvos *{
-    margin: 5px;
+.disciplinas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 30px;
 }
 
-#conteudos {
-    display: flex;
+.disciplina-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
 }
 
-#conteudos a{
-   text-decoration: none;
+.disciplina-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  border-color: var(--verde-primario, #27ae60);
 }
 
-.img-content{
-    width: 250px;
-    height: 200px;
-}
-.p-nome{
-    font-weight: bold;
+.card-imagem {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.p-usuario{
-    display: flex;
-    width: 100%;
-    height: 50px;
+.imagem-disciplina {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
-.p-usuario img {
-    border-radius: 50%;
+
+.disciplina-card:hover .imagem-disciplina {
+  transform: scale(1.08);
 }
-.conteudo { 
-    margin-bottom: 20px; 
-    cursor: pointer; 
-    text-align: center;
-    
+
+.badge-ano {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: var(--verde-primario, #27ae60);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
 }
-.conteudo p {
-    color: black;
-    padding: 5px 10px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+.card-conteudo {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
-.conteudo:hover {
-    transform: scale(0.9);    
+
+.titulo-disciplina {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e3c72;
+  margin: 0 0 15px 0;
+  line-height: 1.4;
+}
+
+.autor-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.foto-autor {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--verde-primario, #27ae60);
+}
+
+.nome-autor {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-rodape {
+  padding: 15px 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.btn-acessar {
+  width: 100%;
+  background-color: var(--verde-primario, #27ae60);
+  color: #fff;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-acessar:hover {
+  background-color: #229954;
+  transform: scale(1.02);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.pagina-info {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+  min-width: 80px;
+  text-align: center;
 }
 
 .page-button {
-    padding: 5px 10px;
-    margin: 0 5px;
-    background-color: var(--verde-primario);;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background-color: var(--verde-primario, #27ae60);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.page-button:hover:not(:disabled) {
+  background-color: #229954;
+  transform: translateY(-2px);
+}
+
+.page-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 1024px) {
+  .disciplinas-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .destaques {
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+
+  .destaques-titulo {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .disciplinas-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
   }
 
   .pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
-    .page-button:hover {
-    background-color: var(--verde-secundario);
+  .page-button {
+    padding: 8px 14px;
+    font-size: 12px;
   }
-  
-  .page-button[disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .destaques {
+    padding: 15px;
   }
-  
-  .pagination span {
-    margin: 0 10px;
+
+  .destaques-titulo {
+    font-size: 20px;
   }
+
+  .disciplinas-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .page-button {
+    width: 100%;
+  }
+}
 
 @media screen and (max-width: 768px) {
     .geral {

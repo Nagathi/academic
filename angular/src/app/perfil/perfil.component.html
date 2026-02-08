@@ -29,33 +29,36 @@
     </div>
   
     <div class="destaques">
-      <div class="barra-links">
-        <a  class="link">Destaques</a>
-        <a  class="link">Salvos</a>
-      </div>
-
-      <div class="destaque-content">
-        <div class="salvos">
-          <div class="imagens">
-            <section id="conteudos" *ngFor="let disciplina of getSectionsPorPagina()">
-              <a>
-                <section class="conteudo">
-                  <img class="img-content" [src]="disciplina.foto">
-                  <p class="p-nome">{{disciplina.titulo}}</p>
-                  <div class="p-usuario"><img [src]="foto"><p>{{disciplina.nome}}</p></div>
-                </section>
-              </a>
-            </section>
+      <h2 class="destaques-titulo">Minhas Disciplinas</h2>
+      
+      <div class="disciplinas-grid">
+        <div class="disciplina-card" *ngFor="let disciplina of getSectionsPorPagina()">
+          <div class="card-imagem">
+            <img [src]="disciplina.imagem" [alt]="disciplina.titulo" class="imagem-disciplina">
+            <span class="badge-ano">{{ disciplina.ano }}</span>
+          </div>
+          <div class="card-conteudo">
+            <h3 class="titulo-disciplina">{{ disciplina.titulo }}</h3>
+            <div class="autor-info">
+              <img [src]="foto" [alt]="disciplina.nome" class="foto-autor">
+              <span class="nome-autor">{{ disciplina.nome }}</span>
+            </div>
+          </div>
+          <div class="card-rodape">
+            <button class="btn-acessar">
+              <i class="fas fa-arrow-right"></i> Ver Disciplina
+            </button>
           </div>
         </div>
       </div>
-      <div class="pagination">
+
+      <div class="pagination" *ngIf="totalPaginas() > 1">
         <button class="page-button" [disabled]="paginaAtual === 1" (click)="mudarPagina(paginaAtual - 1)">
-          Anterior
+          <i class="fas fa-chevron-left"></i> Anterior
         </button>
-        <span>{{ paginaAtual }} de {{ totalPaginas() }}</span>
+        <span class="pagina-info">{{ paginaAtual }} de {{ totalPaginas() }}</span>
         <button class="page-button" [disabled]="paginaAtual === totalPaginas()" (click)="mudarPagina(paginaAtual + 1)">
-          Próxima
+          Próxima <i class="fas fa-chevron-right"></i>
         </button>
       </div>
     </div>

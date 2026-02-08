@@ -25,14 +25,15 @@ public class DisciplinaController {
     public ResponseEntity<?> cadastrarDisciplina(@RequestParam("titulo") String titulo,
                                          @RequestParam("ano") String ano,
                                          @RequestParam("token") String token,
-                                         @RequestPart(value = "foto", required = false) MultipartFile foto){
-        if (foto != null && !foto.isEmpty()) {
+                                         @RequestParam(value = "cursos", required = false) String cursos,
+                                         @RequestPart(value = "imagem", required = false) MultipartFile imagem){
+        if (imagem != null && !imagem.isEmpty()) {
             long maxBytes = 50L * 1024L * 1024L;
-            if (foto.getSize() > maxBytes) {
+            if (imagem.getSize() > maxBytes) {
                 return ResponseEntity.status(413).body("Arquivo muito grande. Tamanho máximo permitido: 50MB");
             }
 
-            String contentType = foto.getContentType();
+            String contentType = imagem.getContentType();
             if (contentType == null || !(contentType.equalsIgnoreCase("image/png")
                     || contentType.equalsIgnoreCase("image/jpeg")
                     || contentType.equalsIgnoreCase("image/jpg")
@@ -46,22 +47,21 @@ public class DisciplinaController {
 
         DisciplinaDTO disciplinaDTO = new DisciplinaDTO();
         disciplinaDTO.setToken(token);
-        disciplinaDTO.setFoto(foto);
+        disciplinaDTO.setImagem(imagem);
         disciplinaDTO.setTitulo(titulo);
         disciplinaDTO.setAno(ano);
-
+        disciplinaDTO.setCursos(cursos);
+        
         return disciplinaService.cadastrarDisciplina(disciplinaDTO);
     }
 
     @GetMapping("/minhas-disciplinas/{token}")
     public ResponseEntity<?> obterDisciplinasPorUsuario(@PathVariable String token){
-        
         return disciplinaService.obterDisciplinasPorUsuario(token);
     }
 
     @GetMapping("/lista-disciplinas")
     public ResponseEntity<?> obterDisciplinas(){
-        
         return disciplinaService.obterDisciplinas();
     }
 }

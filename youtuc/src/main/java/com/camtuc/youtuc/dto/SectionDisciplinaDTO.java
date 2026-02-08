@@ -7,8 +7,9 @@ import lombok.Setter;
 @Setter
 public class SectionDisciplinaDTO {
     private Long id;
-    private String foto;
+    private String imagem;
     private String titulo;
     private String ano;
     private String nome;
+    private String foto;
 }

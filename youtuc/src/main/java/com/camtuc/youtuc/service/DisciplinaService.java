@@ -47,6 +47,7 @@ public class DisciplinaService {
                 DisciplinaModel disciplina = new DisciplinaModel();
                 disciplina.setTitulo(disciplinaDTO.getTitulo());
                 disciplina.setAno(disciplinaDTO.getAno());
+                disciplina.setCursos(disciplinaDTO.getCursos());
                 disciplina.setUsuario(usuarioOptional.get());
 
                 DisciplinaModel disciplinaSalva = disciplinaRepository.save(disciplina);
@@ -63,14 +64,14 @@ public class DisciplinaService {
                     novaPasta.mkdirs();
                 }
 
-                if (disciplinaDTO.getFoto() != null){
+                if (disciplinaDTO.getImagem() != null){
                     String uploadImagem = caminhoAbsoluto;
-                    String uniqueImageName = UUID.randomUUID().toString() + "_" + disciplinaDTO.getFoto().getOriginalFilename();
+                    String uniqueImageName = UUID.randomUUID().toString() + "_" + disciplinaDTO.getImagem().getOriginalFilename();
 
                     Path destinoImagem = Path.of(uploadImagem, uniqueImageName);
-                    Files.copy(disciplinaDTO.getFoto().getInputStream(), destinoImagem, StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(disciplinaDTO.getImagem().getInputStream(), destinoImagem, StandardCopyOption.REPLACE_EXISTING);
 
-                    disciplinaSalva.setFoto("Disciplina" + id + "/" + uniqueImageName);
+                    disciplinaSalva.setImagem("Disciplina" + id + "/" + uniqueImageName);
 
                     disciplinaRepository.save(disciplinaSalva);
                 }
@@ -106,10 +107,11 @@ public class DisciplinaService {
                 SectionDisciplinaDTO disciplinaDTO = new SectionDisciplinaDTO();
 
                 disciplinaDTO.setId(disciplina.getId());
-                disciplinaDTO.setFoto("/media/disciplinas/"+disciplina.getFoto());
+                disciplinaDTO.setImagem(disciplina.getImagem());
                 disciplinaDTO.setTitulo(disciplina.getTitulo());
                 disciplinaDTO.setAno(disciplina.getAno());
                 disciplinaDTO.setNome(disciplina.getUsuario().getNome());
+                disciplinaDTO.setFoto(disciplina.getUsuario().getFoto());
 
                 disciplinasDTO.add(disciplinaDTO);
             }
@@ -130,10 +132,12 @@ public class DisciplinaService {
 
         list.stream().limit(100).forEach(disciplina -> {
             BannerDisciplinaDTO dto = new BannerDisciplinaDTO();
-            dto.setFoto(disciplina.getFoto());
+            dto.setImagem(disciplina.getImagem());
             dto.setTitulo(disciplina.getTitulo());
             dto.setAno(disciplina.getAno());
+            dto.setFoto(disciplina.getUsuario().getFoto());
             dto.setAutor(disciplina.getUsuario().getNome());
+            dto.setCursos(disciplina.getCursos());
             disciplinasDTO.add(dto);
         });
 

@@ -14,6 +14,7 @@ export class PerfilComponent {
   private readonly apiUrl = environment.apiURL;
 
   foto = "assets/svg/avatar.svg";
+  imagem = "assets/svg/sem-imagem.svg";
   nome = "";
   usuario = "";
 
@@ -74,7 +75,9 @@ export class PerfilComponent {
         if(response.foto != null){
           this.foto = `${this.apiUrl}/usuarios/fotos/` + response.foto;
         }
-
+        if(response.imagem != null){
+          this.imagem = `${this.apiUrl}/disciplinas/` + response.imagem;
+        }
         this.nome = response.nome;
         this.usuario = response.usuario;
       }
@@ -115,8 +118,8 @@ export class PerfilComponent {
         this.disciplinas = response;
 
         this.disciplinas.forEach(disciplina => {
-          if (disciplina.foto !== null) {
-            disciplina.foto = `${this.apiUrl}/disciplinas/` + disciplina.foto;
+          if (disciplina.imagem !== null) {
+            disciplina.imagem = `${this.apiUrl}/disciplinas/` + disciplina.imagem;
           }
         });
       }

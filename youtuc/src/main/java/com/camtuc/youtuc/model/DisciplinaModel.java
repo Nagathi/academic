@@ -19,9 +19,10 @@ public class DisciplinaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String foto;
+    private String imagem;
     private String titulo;
     private String ano;
+    private String cursos;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")

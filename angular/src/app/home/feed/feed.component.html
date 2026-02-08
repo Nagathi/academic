@@ -1,27 +1,34 @@
 <div class="feed">
-    <div class="header-feed">
-        <div class="h1-feed">
-            <h1>Feed de disciplinas</h1>
+  <h2 class="destaques-titulo">Feed de Disciplinas</h2>
+  <div class="disciplinas-grid">
+    <div class="disciplina-card" *ngFor="let disciplina of getSectionsPorPagina()">
+      <div class="card-imagem">
+        <img [src]="disciplina.imagem" [alt]="disciplina.titulo" class="imagem-disciplina">
+        <span class="badge-ano">{{ disciplina.ano }}</span>
+      </div>
+      <div class="card-conteudo">
+        <h3 class="titulo-disciplina">{{ disciplina.titulo }}</h3>
+        <div class="autor-info">
+          <img [src]="disciplina.foto" [alt]="disciplina.autor" class="foto-autor">
+          <span class="nome-autor">{{ disciplina.autor }}</span>
         </div>
-    </div>
-    <div class="content">
-      <section *ngFor="let disciplina of getSectionsPorPagina()" id="conteudos">
-        <a>
-          <img class="img-content" [src]="disciplina.foto">
-          <p class="p-nome">{{disciplina.titulo}}</p>
-          <div class="p-usuario">
-            <p>{{disciplina.autor}}</p> 
-          </div>
+      </div>
+      <div class="card-rodape">
+        <a href="/disciplina?d=dsadsadsa">
+          <button class="btn-acessar">
+            <i class="fas fa-arrow-right"></i> Ver Disciplina
+          </button>
         </a>
-      </section>
+      </div>
     </div>
-    <div class="pagination">
-      <button class="page-button" [disabled]="paginaAtual === 1" (click)="mudarPagina(paginaAtual - 1)">
-        Anterior
-      </button>
-      <span>{{ paginaAtual }} de {{ totalPaginas() }}</span>
-      <button class="page-button" [disabled]="paginaAtual === totalPaginas()" (click)="mudarPagina(paginaAtual + 1)">
-        Próxima
-      </button>
-    </div>
+  </div>
+  <div class="pagination">
+    <button class="page-button" [disabled]="paginaAtual === 1" (click)="mudarPagina(paginaAtual - 1)">
+      Anterior
+    </button>
+    <span>{{ paginaAtual }} de {{ totalPaginas() }}</span>
+    <button class="page-button" [disabled]="paginaAtual === totalPaginas()" (click)="mudarPagina(paginaAtual + 1)">
+      Próxima
+    </button>
+  </div>
 </div>

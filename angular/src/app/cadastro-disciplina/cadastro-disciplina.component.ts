@@ -25,7 +25,12 @@ export class CadastroDisciplinaComponent implements OnInit {
     this.disciplinaForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       ano: ['', Validators.required],
-      foto: ['']
+      foto: [''],
+      cursoAmbiental: [false],
+      cursoCivil: [false],
+      cursoComputacao: [false],
+      cursoEletrica: [false],
+      cursoMecanica: [false]
     });
   }
   
@@ -34,6 +39,18 @@ export class CadastroDisciplinaComponent implements OnInit {
     formData.append('titulo', this.disciplinaForm.get('titulo')?.value || '');
     formData.append('ano', this.disciplinaForm.get('ano')?.value || '');
     formData.append('token', localStorage.getItem('token') || '');
+    
+    const cursosArray: string[] = [];
+    if (this.disciplinaForm.get('cursoAmbiental')?.value) cursosArray.push('Ambiental');
+    if (this.disciplinaForm.get('cursoCivil')?.value) cursosArray.push('Civil');
+    if (this.disciplinaForm.get('cursoComputacao')?.value) cursosArray.push('Computação');
+    if (this.disciplinaForm.get('cursoEletrica')?.value) cursosArray.push('Elétrica');
+    if (this.disciplinaForm.get('cursoMecanica')?.value) cursosArray.push('Mecânica');
+    
+    if (cursosArray.length > 0) {
+      formData.append('cursos', cursosArray.join(','));
+    }
+    
     if (this.fotoSelecionada) {
       formData.append('foto', this.fotoSelecionada);
     }

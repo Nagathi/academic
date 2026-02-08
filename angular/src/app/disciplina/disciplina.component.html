@@ -1,26 +1,49 @@
-<div class="container">
-    <h1>{{ nomeDisciplina }}</h1>
-    <div class="info">
-        <div class="foto-professor">
-            <img src="caminho-para-sua-imagem" alt="Foto do Professor" />
-        </div>
-        <div class="info-professor">
-            <h3>{{ nomeProfessor }}</h3>
-        </div>
-        <div class="info-ano">
-            <p>Ano: {{ anoMinistracao }}</p>
-        </div>
+<div class="disciplina-container">
+  <div class="disciplina-header">
+    <h1 class="disciplina-titulo">{{ nomeDisciplina }}</h1>
+    <p class="disciplina-descricao">{{ descricao }}</p>
+  </div>
+
+  <div class="professor-card">
+    <div class="professor-foto">
+      <img [src]="fotoProfessor" [alt]="nomeProfessor" />
     </div>
-    <div class="conteudos">
-      <h2>Conteúdos</h2>
-      <ul>
-        <li *ngFor="let conteudo of conteudos">
-          <div class="conteudo-item">
-            <p>{{ conteudo.titulo }}</p>
-            <p>{{ conteudo.descricao }}</p>
-            <p>{{ conteudo.anexo }}</p>
-          </div>
-        </li>
-      </ul>
+    <div class="professor-info">
+      <h2>Professor</h2>
+      <p class="nome-professor"><strong>{{ nomeProfessor }}</strong></p>
+      <p class="ano-ministracao"><i class="fas fa-calendar"></i> {{ anoMinistracao }}</p>
     </div>
   </div>
+
+  <div class="cursos-section">
+    <h2>Cursos</h2>
+    <div class="cursos-list">
+      <div class="curso-badge" *ngFor="let curso of cursos">
+        <i class="fas fa-graduation-cap"></i>
+        {{ curso }}
+      </div>
+    </div>
+  </div>
+
+  <div class="conteudos-section">
+    <h2>Aulas e Materiais</h2>
+    <div class="conteudos-grid">
+      <div class="conteudo-card" *ngFor="let conteudo of conteudos">
+        <div class="card-header">
+          <i [class]="getTipoIcon(conteudo.tipo)"></i>
+          <span class="tipo-badge">{{ conteudo.tipo }}</span>
+        </div>
+        <h3>{{ conteudo.titulo }}</h3>
+        <p>{{ conteudo.descricao }}</p>
+        <div class="card-footer">
+          <button class="btn-acessar" *ngIf="conteudo.anexo">
+            <i class="fas fa-play-circle"></i> Acessar
+          </button>
+          <span class="btn-indisponivel" *ngIf="!conteudo.anexo">
+            <i class="fas fa-lock"></i> Em breve
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

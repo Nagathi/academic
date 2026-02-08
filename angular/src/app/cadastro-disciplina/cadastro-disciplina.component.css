@@ -157,3 +157,46 @@ button[type='submit']:disabled {
     transform: translateY(0);
   }
 }
+
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #fafafa;
+}
+
+legend {
+  padding: 0 10px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.cursos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.curso-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+input[type='checkbox'] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--verde-primario, #27ae60);
+}
+
+.curso-item label {
+  margin: 0;
+  cursor: pointer;
+  font-weight: 500;
+  color: #555;
+  user-select: none;
+}

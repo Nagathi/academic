@@ -1,6 +1,53 @@
 <footer class="footer">
-    <div class="container">
-      <p>Seu conteúdo do footer aqui.</p>
+  <div class="footer-container">
+    <!-- Seção 1: Sobre -->
+    <div class="footer-section">
+      <h3>Sobre Nós</h3>
+      <p>Plataforma acadêmica de compartilhamento de disciplinas, conteúdo e conhecimento entre estudantes e professores.</p>
     </div>
+
+    <!-- Seção 2: Links Rápidos -->
+    <div class="footer-section">
+      <h3>Links Rápidos</h3>
+      <ul>
+        <li *ngFor="let link of menuLinks">
+          <a [routerLink]="link.url">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Seção 3: Contato -->
+    <div class="footer-section">
+      <h3>Contato</h3>
+      <ul>
+        <li><i class="fas fa-envelope"></i> contato@academic.com</li>
+        <li><i class="fas fa-phone"></i> (11) 9999-9999</li>
+        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+      </ul>
+    </div>
+
+    <!-- Seção 4: Redes Sociais -->
+    <div class="footer-section">
+      <h3>Siga-nos</h3>
+      <div class="redes-sociais">
+        <a *ngFor="let rede of redeSociais" 
+           [href]="rede.url" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           [title]="rede.nome"
+           class="social-link">
+          <i [class]="rede.icon"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Linha divisória -->
+  <div class="footer-divider"></div>
+
+  <!-- Copyright -->
+  <div class="footer-bottom">
+    <p>&copy; {{ anoAtual }} Academic. Todos os direitos reservados.</p>
+  </div>
 </footer>
   

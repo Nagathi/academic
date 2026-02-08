@@ -8,5 +8,31 @@
   <label for="ano">Ano:</label>
   <input type="number" id="ano" formControlName="ano" />
 
+  <fieldset>
+    <legend>Cursos</legend>
+    <div class="cursos-container">
+      <div class="curso-item">
+        <input type="checkbox" id="ambiental" formControlName="cursoAmbiental" />
+        <label for="ambiental">Ambiental</label>
+      </div>
+      <div class="curso-item">
+        <input type="checkbox" id="civil" formControlName="cursoCivil" />
+        <label for="civil">Civil</label>
+      </div>
+      <div class="curso-item">
+        <input type="checkbox" id="computacao" formControlName="cursoComputacao" />
+        <label for="computacao">Computação</label>
+      </div>
+      <div class="curso-item">
+        <input type="checkbox" id="eletrica" formControlName="cursoEletrica" />
+        <label for="eletrica">Elétrica</label>
+      </div>
+      <div class="curso-item">
+        <input type="checkbox" id="mecanica" formControlName="cursoMecanica" />
+        <label for="mecanica">Mecânica</label>
+      </div>
+    </div>
+  </fieldset>
+
   <button type="submit">Salvar</button>
 </form>
