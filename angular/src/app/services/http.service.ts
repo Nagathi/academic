@@ -262,5 +262,17 @@ export class HttpService {
     this.disciplinasCache = null;
     this.disciplinasCacheTimestamp = 0;
   }
-  
+
+  verDisciplina(id: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.http.get<any>(`${this.apiUrl}/disciplina/mostra-disciplina?id=${id}`).subscribe(
+        (response: any) => {
+          resolve(response);
+        },
+        (error: HttpErrorResponse) => {
+          reject('Erro ao carregar disciplina.');
+        }
+      );
+    });
+  }
 }

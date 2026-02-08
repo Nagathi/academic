@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HttpService } from '../services/http.service';
+import { environment } from 'src/environment';
 
 @Component({
   selector: 'app-disciplina',
@@ -6,12 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./disciplina.component.css']
 })
 export class DisciplinaComponent {
-  nomeDisciplina: string = 'Desenvolvimento Web';
-  nomeProfessor: string = 'Bruno Merlin';
-  anoMinistracao: number = 2024;
+  nomeDisciplina: string = '';
+  nomeProfessor: string = '';
+  anoMinistracao: number = 0;
   fotoProfessor: string = '/assets/placeholder-professor.jpg';
-  cursos: string[] = ['Engenharia de Computação', 'Sistemas de Informação'];
-  descricao: string = 'Una disciplina que abrange os fundamentos e as práticas modernas de desenvolvimento para web, incluindo frontend, backend e deploy.';
+  cursos: string[] = [];
+  descricao: string = '';
 
   conteudos: any[] = [
     {
@@ -34,8 +36,54 @@ export class DisciplinaComponent {
       descricao: 'Material complementar para estudo adicional.',
       tipo: 'documento',
       anexo: ''
+    },
+    {
+      id: 4,
+      titulo: 'Aula 3: Material Complementar',
+      descricao: 'Material complementar para estudo adicional.',
+      tipo: 'documento',
+      anexo: ''
+    },
+    {
+      id: 5,
+      titulo: 'Aula 3: Material Complementar',
+      descricao: 'Material complementar para estudo adicional.',
+      tipo: 'documento',
+      anexo: ''
+    },
+    {
+      id: 6,
+      titulo: 'Aula 3: Material Complementar',
+      descricao: 'Material complementar para estudo adicional.',
+      tipo: 'documento',
+      anexo: ''
+    },
+    {
+      id: 7,
+      titulo: 'Aula 3: Material Complementar',
+      descricao: 'Material complementar para estudo adicional.',
+      tipo: 'documento',
+      anexo: ''
     }
   ];
+
+  constructor(private http: HttpService) {}
+
+  ngOnInit() {
+    this.http.verDisciplina(5).then(
+      (response: any) => {
+        this.nomeDisciplina = response.titulo;
+        this.nomeProfessor = response.autor;
+        this.anoMinistracao = response.ano;
+        this.fotoProfessor = `${environment.apiURL}/usuarios/fotos/${response.foto}` || '/assets/svg/avatar.svg';
+        this.cursos = response.cursos ? response.cursos.split(',') : [];
+        this.descricao = 'Lembrar de adicionar uma descrição para a disciplina no backend e integrar aqui.';
+      },
+      (error) => {
+        console.error('Erro ao obter detalhes da disciplina:', error);
+      }
+    );
+  }
 
   getTipoIcon(tipo: string): string {
     const icons: any = {

@@ -11,21 +11,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "disciplina")
+@Table(name = "aula")
 @Getter
 @Setter
-public class DisciplinaModel {
+public class AulaModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String imagem;
+    private String tipo;
     private String titulo;
-    private String ano;
-    private String cursos;
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private UsuarioModel usuario;
+    @JoinColumn(name = "disciplina_id")
+    private DisciplinaModel disciplina;
+
 }

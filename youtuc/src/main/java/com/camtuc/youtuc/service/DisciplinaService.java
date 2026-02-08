@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.camtuc.youtuc.dto.BannerDisciplinaDTO;
+import com.camtuc.youtuc.dto.ConteudoDisciplinaDTO;
 import com.camtuc.youtuc.dto.DisciplinaDTO;
 import com.camtuc.youtuc.dto.SectionDisciplinaDTO;
 import com.camtuc.youtuc.model.DisciplinaModel;
@@ -145,6 +146,27 @@ public class DisciplinaService {
 
         return ResponseEntity.status(HttpStatus.OK).body(disciplinasDTO);
 
+    }
+
+    public ResponseEntity<?> verDisciplina(Long id){
+        Optional<DisciplinaModel> disciplinaOptional = disciplinaRepository.findById(id);
+
+        if(disciplinaOptional.isPresent()){
+            DisciplinaModel disciplina = disciplinaOptional.get();
+            ConteudoDisciplinaDTO disciplinaDTO = new ConteudoDisciplinaDTO();
+
+            disciplinaDTO.setId(disciplina.getId());
+            disciplinaDTO.setImagem(disciplina.getImagem());
+            disciplinaDTO.setTitulo(disciplina.getTitulo());
+            disciplinaDTO.setAno(disciplina.getAno());
+            disciplinaDTO.setCursos(disciplina.getCursos());
+            disciplinaDTO.setAutor(disciplina.getUsuario().getNome());
+            disciplinaDTO.setFoto(disciplina.getUsuario().getFoto());
+
+            return ResponseEntity.status(HttpStatus.OK).body(disciplinaDTO);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Disciplina não encontrada.");
     }
     
 }

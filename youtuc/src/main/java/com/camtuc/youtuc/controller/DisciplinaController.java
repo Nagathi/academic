@@ -64,4 +64,10 @@ public class DisciplinaController {
     public ResponseEntity<?> obterDisciplinas(){
         return disciplinaService.obterDisciplinas();
     }
+
+    @GetMapping("/mostra-disciplina")
+    public ResponseEntity<?> verDisciplina(@RequestParam Long id){
+        return disciplinaService.verDisciplina(id);
+    }
+    
 }
