@@ -1,15 +1,12 @@
 package com.camtuc.youtuc.controller;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.camtuc.youtuc.dto.AulaDTO;
 import com.camtuc.youtuc.service.AulaService;
 
 @RequestMapping("/aula")
@@ -21,10 +18,17 @@ public class AulaController {
     @PostMapping("/nova-aula")
     private ResponseEntity<?> cadastrarAula(@RequestParam("titulo") String titulo,
                                             @RequestParam("descricao") String descricao,
-                                            @RequestPart(value = "arquivos", required = false) List<MultipartFile> arquivos) {
+                                            @RequestParam("disciplina_id") Long disciplinaId,
+                                            @RequestParam("ordem") Integer ordem) {
+
+        AulaDTO aulaDTO = new AulaDTO();
+        aulaDTO.setTitulo(titulo);
+        aulaDTO.setDescricao(descricao);
+        aulaDTO.setDisciplinaId(disciplinaId);
+        aulaDTO.setOrdem(ordem);
 
 
-        return ResponseEntity.ok().build();
+        return aulaService.cadastrarAula(aulaDTO);
     }
 
 
