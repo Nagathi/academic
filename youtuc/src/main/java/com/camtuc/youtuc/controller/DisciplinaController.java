@@ -26,7 +26,8 @@ public class DisciplinaController {
                                          @RequestParam("ano") String ano,
                                          @RequestParam("token") String token,
                                          @RequestParam(value = "cursos", required = false) String cursos,
-                                         @RequestPart(value = "imagem", required = false) MultipartFile imagem){
+                                         @RequestPart(value = "imagem", required = false) MultipartFile imagem,
+                                         @RequestParam(value = "descricao", required = false) String descricao) {
         if (imagem != null && !imagem.isEmpty()) {
             long maxBytes = 50L * 1024L * 1024L;
             if (imagem.getSize() > maxBytes) {
@@ -51,6 +52,7 @@ public class DisciplinaController {
         disciplinaDTO.setTitulo(titulo);
         disciplinaDTO.setAno(ano);
         disciplinaDTO.setCursos(cursos);
+        disciplinaDTO.setDescricao(descricao);
         
         return disciplinaService.cadastrarDisciplina(disciplinaDTO);
     }

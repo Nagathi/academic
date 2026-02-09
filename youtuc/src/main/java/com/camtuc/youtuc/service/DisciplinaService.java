@@ -50,6 +50,7 @@ public class DisciplinaService {
                 disciplina.setAno(disciplinaDTO.getAno());
                 disciplina.setCursos(disciplinaDTO.getCursos());
                 disciplina.setUsuario(usuarioOptional.get());
+                disciplina.setDescricao(disciplinaDTO.getDescricao());
 
                 DisciplinaModel disciplinaSalva = disciplinaRepository.save(disciplina);
 
@@ -163,6 +164,7 @@ public class DisciplinaService {
             disciplinaDTO.setCursos(disciplina.getCursos());
             disciplinaDTO.setAutor(disciplina.getUsuario().getNome());
             disciplinaDTO.setFoto(disciplina.getUsuario().getFoto());
+            disciplinaDTO.setDescricao(disciplina.getDescricao());
 
             return ResponseEntity.status(HttpStatus.OK).body(disciplinaDTO);
         }

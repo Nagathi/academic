@@ -14,5 +14,6 @@ public class ConteudoDisciplinaDTO {
     private String cursos;
     private String autor;
     private String foto;
+    private String descricao;
     
 }

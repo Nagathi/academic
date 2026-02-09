@@ -1,16 +1,18 @@
 package com.camtuc.youtuc.dto;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class DisciplinaDTO {
-    private MultipartFile imagem;
+public class AulaDTO {
+
     private String titulo;
-    private String ano;
-    private String token;
-    private String cursos;
     private String descricao;
+    private List<MultipartFile> arquivos;
+    
 }

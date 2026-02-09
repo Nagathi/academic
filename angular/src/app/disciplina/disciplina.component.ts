@@ -84,7 +84,7 @@ export class DisciplinaComponent {
         this.anoMinistracao = response.ano;
         this.fotoProfessor = `${environment.apiURL}/usuarios/fotos/${response.foto}` || '/assets/svg/avatar.svg';
         this.cursos = response.cursos ? response.cursos.split(',') : [];
-        this.descricao = 'Lembrar de adicionar uma descrição para a disciplina no backend e integrar aqui.';
+        this.descricao = response.descricao || '';
       },
       (error) => {
         console.error('Erro ao obter detalhes da disciplina:', error);
