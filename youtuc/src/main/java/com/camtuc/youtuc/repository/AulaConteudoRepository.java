@@ -3,9 +3,9 @@ package com.camtuc.youtuc.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.camtuc.youtuc.model.AulaModel;
+import com.camtuc.youtuc.model.AulaConteudoModel;
 
 @Repository
-public interface AulaRepository extends CrudRepository<AulaModel, Long> {
+public interface AulaConteudoRepository extends CrudRepository<AulaConteudoModel, Long> {
     
 }

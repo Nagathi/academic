@@ -23,11 +23,11 @@ public class DisciplinaController {
 
     @PostMapping(value = "/nova-disciplina", consumes = "multipart/form-data")
     public ResponseEntity<?> cadastrarDisciplina(@RequestParam("titulo") String titulo,
-                                         @RequestParam("ano") String ano,
-                                         @RequestParam("token") String token,
-                                         @RequestParam(value = "cursos", required = false) String cursos,
-                                         @RequestPart(value = "imagem", required = false) MultipartFile imagem,
-                                         @RequestParam(value = "descricao", required = false) String descricao) {
+                                                 @RequestParam("ano") String ano,
+                                                 @RequestParam("token") String token,
+                                                 @RequestParam(value = "cursos", required = false) String cursos,
+                                                 @RequestPart(value = "imagem", required = false) MultipartFile imagem,
+                                                 @RequestParam(value = "descricao", required = false) String descricao) {
         if (imagem != null && !imagem.isEmpty()) {
             long maxBytes = 50L * 1024L * 1024L;
             if (imagem.getSize() > maxBytes) {

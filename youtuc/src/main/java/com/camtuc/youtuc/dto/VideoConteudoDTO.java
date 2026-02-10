@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ConteudoDTO {
-    private String tipo;
+public class VideoConteudoDTO {
+    private Long aulaId;
+    private String video;
     private String titulo;
     private String descricao;
-    private String url;
 }
