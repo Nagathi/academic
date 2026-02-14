@@ -1,5 +1,7 @@
 package com.camtuc.youtuc.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +17,6 @@ public class ConteudoDisciplinaDTO {
     private String autor;
     private String foto;
     private String descricao;
-    
+    private List<AulaDTO> aulas;
+
 }

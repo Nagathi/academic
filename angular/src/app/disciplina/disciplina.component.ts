@@ -15,58 +15,7 @@ export class DisciplinaComponent {
   fotoProfessor: string = '/assets/placeholder-professor.jpg';
   cursos: string[] = [];
   descricao: string = '';
-
-  conteudos: any[] = [
-    {
-      id: 1,
-      titulo: 'Aula 1: Introdução',
-      descricao: 'Breve introdução ao conteúdo da disciplina.',
-      tipo: 'video',
-      anexo: 'https://www.youtube.com/embed/your-video-id'
-    },
-    {
-      id: 2,
-      titulo: 'Aula 2: Exemplo Prático',
-      descricao: 'Exemplo prático para a compreensão do conteúdo.',
-      tipo: 'slides',
-      anexo: ''
-    },
-    {
-      id: 3,
-      titulo: 'Aula 3: Material Complementar',
-      descricao: 'Material complementar para estudo adicional.',
-      tipo: 'documento',
-      anexo: ''
-    },
-    {
-      id: 4,
-      titulo: 'Aula 3: Material Complementar',
-      descricao: 'Material complementar para estudo adicional.',
-      tipo: 'documento',
-      anexo: ''
-    },
-    {
-      id: 5,
-      titulo: 'Aula 3: Material Complementar',
-      descricao: 'Material complementar para estudo adicional.',
-      tipo: 'documento',
-      anexo: ''
-    },
-    {
-      id: 6,
-      titulo: 'Aula 3: Material Complementar',
-      descricao: 'Material complementar para estudo adicional.',
-      tipo: 'documento',
-      anexo: ''
-    },
-    {
-      id: 7,
-      titulo: 'Aula 3: Material Complementar',
-      descricao: 'Material complementar para estudo adicional.',
-      tipo: 'documento',
-      anexo: ''
-    }
-  ];
+  conteudos: any[] = [];
 
   constructor(private http: HttpService, 
               private route: ActivatedRoute) {}
@@ -85,6 +34,7 @@ export class DisciplinaComponent {
         this.fotoProfessor = `${environment.apiURL}/usuarios/fotos/${response.foto}` || '/assets/svg/avatar.svg';
         this.cursos = response.cursos ? response.cursos.split(',') : [];
         this.descricao = response.descricao || '';
+        this.conteudos = response.aulas || [];
       },
       (error) => {
         console.error('Erro ao obter detalhes da disciplina:', error);

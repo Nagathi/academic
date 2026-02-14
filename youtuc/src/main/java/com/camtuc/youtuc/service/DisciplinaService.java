@@ -15,12 +15,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.camtuc.youtuc.dto.AulaDTO;
 import com.camtuc.youtuc.dto.BannerDisciplinaDTO;
 import com.camtuc.youtuc.dto.ConteudoDisciplinaDTO;
 import com.camtuc.youtuc.dto.DisciplinaDTO;
 import com.camtuc.youtuc.dto.SectionDisciplinaDTO;
+import com.camtuc.youtuc.model.AulaModel;
 import com.camtuc.youtuc.model.DisciplinaModel;
 import com.camtuc.youtuc.model.UsuarioModel;
+import com.camtuc.youtuc.repository.AulaRepository;
 import com.camtuc.youtuc.repository.DisciplinaRepository;
 import com.camtuc.youtuc.repository.UsuarioRepository;
 
@@ -32,6 +35,9 @@ public class DisciplinaService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private AulaRepository aulaRepository;
 
     @Autowired
     private TokenService tokenService;
@@ -157,6 +163,19 @@ public class DisciplinaService {
             DisciplinaModel disciplina = disciplinaOptional.get();
             ConteudoDisciplinaDTO disciplinaDTO = new ConteudoDisciplinaDTO();
 
+            List<AulaModel> aulas = aulaRepository.findAulasByDisciplina(disciplina);
+
+            List<AulaDTO> aulasDTO = new ArrayList<>();
+
+            for(AulaModel aula : aulas){
+                AulaDTO aulaDTO = new AulaDTO();
+                aulaDTO.setId(aula.getId());
+                aulaDTO.setTitulo(aula.getTitulo());
+                aulaDTO.setDescricao(aula.getDescricao());
+                aulaDTO.setOrdem(aula.getOrdem());
+                aulasDTO.add(aulaDTO);
+            }
+
             disciplinaDTO.setId(disciplina.getId());
             disciplinaDTO.setImagem(disciplina.getImagem());
             disciplinaDTO.setTitulo(disciplina.getTitulo());
@@ -165,11 +184,105 @@ public class DisciplinaService {
             disciplinaDTO.setAutor(disciplina.getUsuario().getNome());
             disciplinaDTO.setFoto(disciplina.getUsuario().getFoto());
             disciplinaDTO.setDescricao(disciplina.getDescricao());
+            disciplinaDTO.setAulas(aulasDTO);
 
             return ResponseEntity.status(HttpStatus.OK).body(disciplinaDTO);
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Disciplina não encontrada.");
+    }
+
+    public ResponseEntity<?> editarTitulo(String titulo, Long id, String token) {
+        try {
+            String email = tokenService.validarToken(token);
+    
+            Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+
+            if(usuarioOptional.isPresent()){
+                Optional<DisciplinaModel> disciplinaOptional = disciplinaRepository.findById(id);
+
+                if(disciplinaOptional.isPresent()){
+                    DisciplinaModel disciplina = disciplinaOptional.get();
+
+                    if(disciplina.getUsuario().getId().equals(usuarioOptional.get().getId())){
+                        disciplina.setTitulo(titulo);
+                        disciplinaRepository.save(disciplina);
+                        return ResponseEntity.status(HttpStatus.OK).build();
+                    } else {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
+                    }
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Disciplina não encontrada.");
+                }
+            }
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocorreu um erro de validação.");
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a solicitação.");
+        }
+    }
+
+    public ResponseEntity<?> editarDescricao(String descricao, Long id, String token) {
+        try {
+            String email = tokenService.validarToken(token);
+    
+            Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+
+            if(usuarioOptional.isPresent()){
+                Optional<DisciplinaModel> disciplinaOptional = disciplinaRepository.findById(id);
+
+                if(disciplinaOptional.isPresent()){
+                    DisciplinaModel disciplina = disciplinaOptional.get();
+
+                    if(disciplina.getUsuario().getId().equals(usuarioOptional.get().getId())){
+                        disciplina.setDescricao(descricao);
+                        disciplinaRepository.save(disciplina);
+                        return ResponseEntity.status(HttpStatus.OK).build();
+                    } else {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
+                    }
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Disciplina não encontrada.");
+                }
+            }
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocorreu um erro de validação.");
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a solicitação.");
+        }
+    }
+
+    public ResponseEntity<?> editarCursos(String cursos, Long id, String token) {
+        try {
+            String email = tokenService.validarToken(token);
+    
+            Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+
+            if(usuarioOptional.isPresent()){
+                Optional<DisciplinaModel> disciplinaOptional = disciplinaRepository.findById(id);
+
+                if(disciplinaOptional.isPresent()){
+                    DisciplinaModel disciplina = disciplinaOptional.get();
+
+                    if(disciplina.getUsuario().getId().equals(usuarioOptional.get().getId())){
+                        disciplina.setCursos(cursos);
+                        disciplinaRepository.save(disciplina);
+                        return ResponseEntity.status(HttpStatus.OK).build();
+                    } else {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
+                    }
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Disciplina não encontrada.");
+                }
+            }
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocorreu um erro de validação.");
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a solicitação.");
+        }
     }
     
 }

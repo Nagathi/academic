@@ -1,0 +1,191 @@
+<div class="disciplina-container">
+
+  <!-- HEADER -->
+  <div class="disciplina-header">
+
+    <!-- TÍTULO -->
+    <div class="titulo-editavel-bloco">
+
+      <div class="titulo-editavel">
+
+        <h1 *ngIf="!editandoTitulo" class="disciplina-titulo">
+          {{ nomeDisciplina }}
+        </h1>
+
+        <input
+          *ngIf="editandoTitulo"
+          [(ngModel)]="nomeDisciplina"
+          class="disciplina-titulo-input"
+          (keydown.enter)="salvarDisciplina()"
+          (keydown.escape)="cancelarTitulo()"
+          autofocus
+        />
+
+        <div class="icons">
+          <div 
+            *ngIf="!editandoTitulo"
+            class="icone-editar"
+            (click)="editarDisciplina()"
+          >
+            <img src="/assets/icons/editar.png">
+          </div>
+
+          <div 
+            *ngIf="editandoTitulo"
+            class="icone-editar salvar"
+            (click)="salvarDisciplina()"
+          >
+            <img src="/assets/icons/correto.png">
+          </div>
+
+          <div 
+            *ngIf="editandoTitulo"
+            class="icone-editar cancelar"
+            (click)="cancelarTitulo()"
+          >
+            <img src="/assets/icons/errado.png">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- DESCRIÇÃO -->
+    <div class="descricao-editavel-bloco">
+
+      <div class="titulo-editavel">
+
+        <p *ngIf="!editandoDescricao" class="disciplina-descricao">
+          {{ descricao || 'Sem descrição' }}
+        </p>
+
+        <textarea
+          *ngIf="editandoDescricao"
+          [(ngModel)]="descricao"
+          class="disciplina-descricao-input"
+          rows="2"
+          (keydown.enter)="salvarDescricao()"
+          (keydown.escape)="cancelarDescricao()"
+        ></textarea>
+
+        <div class="icons">
+          <div 
+            *ngIf="!editandoDescricao"
+            class="icone-editar"
+            (click)="editarDescricao()"
+          >
+            <img src="/assets/icons/editar.png">
+          </div>
+
+          <div 
+            *ngIf="editandoDescricao"
+            class="icone-editar salvar"
+            (click)="salvarDescricao()"
+          >
+            <img src="/assets/icons/correto.png">
+          </div>
+
+          <div 
+            *ngIf="editandoDescricao"
+            class="icone-editar cancelar"
+            (click)="cancelarDescricao()"
+          >
+            <img src="/assets/icons/errado.png">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- PROFESSOR -->
+  <div class="professor-card">
+    <div class="professor-foto">
+      <img [src]="fotoProfessor" [alt]="nomeProfessor" />
+    </div>
+
+    <div class="professor-info">
+      <h2>Professor</h2>
+      <p class="nome-professor">{{ nomeProfessor }}</p>
+      <p class="ano-ministracao">{{ anoMinistracao }}</p>
+    </div>
+  </div>
+
+  <!-- CURSOS -->
+  <div class="cursos-section">
+
+  <div class="cursos-header">
+    <h2>Cursos</h2>
+
+    <div class="icone-editar" (click)="editarCursos()">
+      <img src="/assets/icons/editar.png">
+    </div>
+  </div>
+
+  <!-- VISUAL NORMAL -->
+  <div class="cursos-list" *ngIf="!editandoCursos">
+    <div class="curso-badge" *ngFor="let c of cursos">
+      <i class="fas fa-graduation-cap"></i>
+      {{ getCursoNome(c) }}
+    </div>
+  </div>
+
+  <!-- EDIÇÃO -->
+  <div class="cursos-edicao" *ngIf="editandoCursos">
+
+    <div 
+      class="curso-opcao"
+      *ngFor="let curso of cursosPossiveis"
+      [class.ativo]="isCursoSelecionado(curso.valor)"
+      (click)="toggleCurso(curso.valor)"
+    >
+      <i class="fas fa-graduation-cap"></i>
+      {{ curso.nome }}
+    </div>
+
+    <div class="curso-actions">
+      <button class="btn-acessar" (click)="salvarCursos()">
+        Salvar
+      </button>
+
+      <button class="btn-indisponivel" (click)="cancelarCursos()">
+        Cancelar
+      </button>
+    </div>
+    
+  </div>
+
+
+
+  <!-- CONTEÚDOS -->
+  <div class="conteudos-section">
+    <h2>Aulas e Materiais</h2>
+
+    <div class="conteudos-grid">
+
+      <div class="conteudo-card" *ngFor="let conteudo of conteudos">
+        <div class="card-header">
+          <i [class]="getTipoIcon(conteudo.tipo)"></i>
+          <span class="tipo-badge" (click)="excluirConteudo(conteudo)">Excluir</span>
+        </div>
+        <h3>{{ conteudo.titulo }}</h3>
+        <p>{{ conteudo.descricao }}</p>
+        <div class="card-footer">
+          <button class="btn-acessar">
+            Editar
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-nova-aula"> + Nova Aula</button>
+
+    </div>
+  </div>
+
+</div>

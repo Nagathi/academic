@@ -29,19 +29,13 @@
     <h2>Aulas e Materiais</h2>
     <div class="conteudos-grid">
       <div class="conteudo-card" *ngFor="let conteudo of conteudos">
-        <div class="card-header">
-          <i [class]="getTipoIcon(conteudo.tipo)"></i>
-          <span class="tipo-badge">{{ conteudo.tipo }}</span>
-        </div>
+        <div class="card-header"></div>
         <h3>{{ conteudo.titulo }}</h3>
         <p>{{ conteudo.descricao }}</p>
         <div class="card-footer">
-          <button class="btn-acessar" *ngIf="conteudo.anexo">
+          <button class="btn-acessar">
             <i class="fas fa-play-circle"></i> Acessar
           </button>
-          <span class="btn-indisponivel" *ngIf="!conteudo.anexo">
-            <i class="fas fa-lock"></i> Em breve
-          </span>
         </div>
       </div>
     </div>

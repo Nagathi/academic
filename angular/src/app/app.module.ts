@@ -23,6 +23,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EmailComponent } from './email/email.component';
 import { EnviarEmailComponent } from './enviar-email/enviar-email.component';
 import { NovaSenhaComponent } from './nova-senha/nova-senha.component';
+import { EditorComponent } from './editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { NovaSenhaComponent } from './nova-senha/nova-senha.component';
     ModalResponseComponent,
     EmailComponent,
     EnviarEmailComponent,
-    NovaSenhaComponent
+    NovaSenhaComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,

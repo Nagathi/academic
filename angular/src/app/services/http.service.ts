@@ -275,4 +275,96 @@ export class HttpService {
       );
     });
   }
+
+  editarTitulo(titulo: string, id: number): Promise<string> {
+    const token = localStorage.getItem("token");
+
+    return new Promise<string>((resolve, reject) => {
+      this.http.post(`${this.apiUrl}/disciplina/novo-titulo`, {id, titulo, token}).subscribe(
+        (response) => {
+          resolve('200');
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 200) {
+            resolve('200');
+          } else if (error.status === 400) {
+            resolve('400');
+          } else if (error.status === 401) {
+            resolve('401');
+          } else {
+            reject('Erro inesperado');
+          }
+        }
+      );
+    });
+  }
+
+  editarDescricao(descricao: string, id: number): Promise<string> {
+    const token = localStorage.getItem("token");
+
+    return new Promise<string>((resolve, reject) => {
+      this.http.post(`${this.apiUrl}/disciplina/nova-descricao`, {id, descricao, token}).subscribe(
+        (response) => {
+          resolve('200');
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 200) {
+            resolve('200');
+          } else if (error.status === 400) {
+            resolve('400');
+          } else if (error.status === 401) {
+            resolve('401');
+          } else {
+            reject('Erro inesperado');
+          }
+        }
+      );
+    });
+  }
+
+  editarCursos(cursos: string, id: number): Promise<string> {
+    const token = localStorage.getItem("token");
+
+    return new Promise<string>((resolve, reject) => {
+      this.http.post(`${this.apiUrl}/disciplina/novos-cursos`, {id, cursos, token}).subscribe(
+        (response) => {
+          resolve('200');
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 200) {
+            resolve('200');
+          } else if (error.status === 400) {
+            resolve('400');
+          } else if (error.status === 401) {
+            resolve('401');
+          } else {
+            reject('Erro inesperado');
+          }
+        }
+      );
+    });
+  }
+
+  excluirConteudo(id: number): Promise<string> {
+    const token = localStorage.getItem("token");
+
+    return new Promise<string>((resolve, reject) => {
+      this.http.delete(`${this.apiUrl}/aula/excluir`, {body: {id, token}}).subscribe(
+        (response) => {
+          resolve('200');
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 200) {
+            resolve('200');
+          } else if (error.status === 400) {
+            resolve('400');
+          } else if (error.status === 401) {
+            resolve('401');
+          } else {
+            reject('Erro inesperado');
+          }
+        }
+      );
+    });
+  }
 }

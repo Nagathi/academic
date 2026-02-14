@@ -1,0 +1,448 @@
+.disciplina-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.disciplina-header {
+  margin-bottom: 50px;
+  padding-bottom: 30px;
+  border-bottom: 3px solid var(--verde-primario, #27ae60);
+}
+
+.disciplina-titulo {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1e3c72;
+  margin: 0 0 15px 0;
+  text-align: center;
+}
+
+.disciplina-descricao {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0;
+}
+
+.professor-card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.professor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.professor-foto {
+  flex-shrink: 0;
+}
+
+.professor-foto img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--verde-primario, #27ae60);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.professor-info {
+  flex: 1;
+}
+
+.professor-info h2 {
+  font-size: 14px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 10px 0;
+}
+
+.nome-professor {
+  font-size: 24px;
+  color: #1e3c72;
+  margin: 0 0 10px 0;
+}
+
+.ano-ministracao {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ano-ministracao i {
+  color: var(--verde-primario, #27ae60);
+}
+
+.cursos-section {
+  margin-bottom: 50px;
+}
+
+.cursos-section h2 {
+  font-size: 22px;
+  color: #1e3c72;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--verde-primario, #27ae60);
+}
+
+.cursos-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.curso-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--verde-primario, #27ae60);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.curso-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.5);
+}
+
+.curso-badge i {
+  font-size: 16px;
+}
+
+.conteudos-section {
+  margin-bottom: 40px;
+}
+
+.conteudos-section h2 {
+  font-size: 22px;
+  color: #1e3c72;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--verde-primario, #27ae60);
+}
+
+.conteudos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.conteudo-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+.conteudo-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  border-color: var(--verde-primario, #27ae60);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-header i {
+  font-size: 24px;
+}
+
+.tipo-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-left: auto;
+}
+
+.conteudo-card h3 {
+  font-size: 18px;
+  color: #1e3c72;
+  margin: 20px;
+  margin-bottom: 10px;
+}
+
+.conteudo-card p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 20px;
+  flex: 1;
+}
+
+.card-footer {
+  padding: 20px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-acessar {
+  flex: 1;
+  background-color: var(--verde-primario, #27ae60);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-acessar:hover {
+  background-color: #229954;
+  transform: scale(1.02);
+}
+
+.btn-indisponivel {
+  flex: 1;
+  background-color: #e0e0e0;
+  color: #999;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: not-allowed;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icone-editar {
+  background: #f4f6f8;
+  border-radius: 8px;
+  padding: 6px;
+  transition: 0.2s;
+}
+
+.icone-editar:hover {
+  background: #e8f5ee;
+  transform: scale(1.08);
+}
+
+.icone-editar img {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.titulo-editavel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.disciplina-titulo-input {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1e3c72;
+  text-align: center;
+  border: none;
+  border-bottom: 3px solid var(--verde-primario, #27ae60);
+  outline: none;
+  background: transparent;
+  width: 100%;
+  max-width: 600px;
+  padding: 4px 8px;
+  transition: 0.2s;
+}
+
+.disciplina-titulo-input:focus {
+  border-bottom: 3px solid #1e3c72;
+}
+
+.disciplina-descricao-input {
+  width: 100%;
+  max-width: 700px;
+  margin: 10px auto 0 auto;
+  display: block;
+  border: none;
+  border-bottom: 2px solid var(--verde-primario, #27ae60);
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  color: #444;
+  text-align: center;
+  padding: 6px;
+  transition: 0.2s;
+}
+
+.disciplina-descricao-input:focus {
+  border-bottom: 2px solid #1e3c72;
+}
+
+.cursos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cursos-header .icone-editar {
+  opacity: 0;
+}
+
+.cursos-section:hover .icone-editar {
+  opacity: 1;
+}
+
+.curso-input {
+  background: #fff;
+  border: 2px dashed var(--verde-primario, #27ae60);
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.curso-input:focus {
+  border-style: solid;
+  box-shadow: 0 0 0 2px rgba(39,174,96,0.2);
+}
+
+.curso-badge.editando {
+  background: #fff;
+  color: #1e3c72;
+  border: 2px dashed var(--verde-primario, #27ae60);
+  box-shadow: none;
+}
+
+.cursos-edicao {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.curso-opcao {
+  padding: 10px 16px;
+  border-radius: 20px;
+  background: #f4f6f8;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.curso-opcao:hover {
+  background: #e8f5ee;
+}
+
+.curso-opcao.ativo {
+  background: var(--verde-primario, #27ae60);
+  color: #fff;
+  border: 2px solid var(--verde-primario, #27ae60);
+}
+
+.curso-actions {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+
+
+@media (max-width: 768px) {
+  .disciplina-container {
+    padding: 20px 15px;
+  }
+
+  .disciplina-titulo {
+    font-size: 28px;
+  }
+
+  .professor-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .ano-ministracao {
+    justify-content: center;
+  }
+
+  .conteudos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-nova-aula {
+  max-height: 60px;
+  background-color: var(--verde-primario, #27ae60);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  align-self: center;
+  justify-self: center;
+  margin: auto;
+}
+
+@media (max-width: 480px) {
+  .disciplina-titulo {
+    font-size: 24px;
+  }
+
+  .professor-foto img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .cursos-list {
+    justify-content: center;
+  }
+}
+  

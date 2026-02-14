@@ -4,9 +4,11 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,10 @@ import com.camtuc.youtuc.dto.AulaDTO;
 import com.camtuc.youtuc.dto.VideoConteudoDTO;
 import com.camtuc.youtuc.model.AulaConteudoModel;
 import com.camtuc.youtuc.model.AulaModel;
+import com.camtuc.youtuc.model.UsuarioModel;
 import com.camtuc.youtuc.repository.AulaConteudoRepository;
 import com.camtuc.youtuc.repository.AulaRepository;
+import com.camtuc.youtuc.repository.UsuarioRepository;
 
 @Service
 public class AulaService {
@@ -25,7 +29,13 @@ public class AulaService {
     private AulaRepository aulaRepository;
 
     @Autowired
+    private TokenService tokenService;
+
+    @Autowired
     private AulaConteudoRepository aulaConteudoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public ResponseEntity<?> cadastrarAula(AulaDTO aulaDTO) {
         AulaModel aula = new AulaModel();
@@ -91,6 +101,20 @@ public class AulaService {
         aulaConteudoRepository.save(aula);
 
         return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<?> excluirConteudo(Long aulaId, String token) {
+        String email = tokenService.validarToken(token);
+    
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+
+        if(usuarioOptional.isPresent()){
+            AulaModel aula = aulaRepository.findById(aulaId).orElse(null);
+            aulaRepository.delete(aula);
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
+        }
     }
     
 }

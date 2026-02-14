@@ -5,12 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AulaDTO {
-
+public class EditarTituloDTO {
     private Long id;
     private String titulo;
-    private String descricao;
-    private Integer ordem;
-    private Long disciplinaId;
-    
+    private String token;
 }

@@ -9,6 +9,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { EmailComponent } from './email/email.component';
 import { EnviarEmailComponent } from './enviar-email/enviar-email.component';
 import { NovaSenhaComponent } from './nova-senha/nova-senha.component';
+import { EditorComponent } from './editor/editor.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'account-recovery', component: EnviarEmailComponent },
   { path: 'email-verification', component: EnviarEmailComponent },
   { path: 'new-password', component: NovaSenhaComponent },
+  { path: 'editor', component: EditorComponent },
 ];
 
 @NgModule({
