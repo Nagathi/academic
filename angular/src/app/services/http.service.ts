@@ -366,5 +366,19 @@ export class HttpService {
         }
       );
     });
-  }
-}
+   }
+    getAulaById(id: number): Promise<any> {
+      const token = localStorage.getItem("token");
+
+      return new Promise((resolve, reject) => {
+        this.http.get(`${this.apiUrl}/aula/mostra-aula/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).subscribe(
+          (response) => resolve(response),
+          (error) => reject(error)
+        );
+      });
+    }
+  } 

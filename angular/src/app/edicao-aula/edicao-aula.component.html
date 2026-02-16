@@ -1,0 +1,66 @@
+<div class="page" *ngIf="aula">
+
+  <div class="top">
+    <h1 class="titulo">
+      {{ aula.titulo }}
+      <button class="edit" (click)="editarTitulo()">
+        <i class="material-icons">edit</i>
+      </button>
+    </h1>
+
+    <p class="descricao">
+      {{ aula.descricao }}
+      <button class="edit small" (click)="editarDescricao()">
+        <i class="material-icons">edit</i>
+      </button>
+    </p>
+  </div>
+
+  <div class="linha"></div>
+
+  <div class="card">
+
+    <!-- MATERIAIS -->
+    <div class="secao">
+      <div class="secao-header">
+        <h2>Materiais</h2>
+        <button class="edit">
+          <i class="material-icons">edit</i>
+        </button>
+      </div>
+
+      <ul class="lista">
+        <li *ngFor="let m of materiais">
+          {{ m.titulo }}
+          <button class="edit small" (click)="editarConteudo(m)">
+            <i class="material-icons">edit</i>
+          </button>
+        </li>
+      </ul>
+
+      <button class="add" (click)="adicionarMaterial()">+ Adicionar material</button>
+    </div>
+
+    <!-- LINKS / VIDEOS -->
+    <div class="secao">
+      <div class="secao-header">
+        <h2>Links</h2>
+        <button class="edit">
+          <i class="material-icons">edit</i>
+        </button>
+      </div>
+
+      <ul class="lista">
+        <li *ngFor="let l of links">
+          {{ l.url }}
+          <button class="edit small" (click)="editarConteudo(l)">
+            <i class="material-icons">edit</i>
+          </button>
+        </li>
+      </ul>
+
+      <button class="add" (click)="adicionarLink()">+ Adicionar link</button>
+    </div>
+
+  </div>
+</div>

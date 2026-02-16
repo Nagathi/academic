@@ -24,6 +24,7 @@ import { EmailComponent } from './email/email.component';
 import { EnviarEmailComponent } from './enviar-email/enviar-email.component';
 import { NovaSenhaComponent } from './nova-senha/nova-senha.component';
 import { EditorComponent } from './editor/editor.component';
+import { EdicaoAulaComponent } from './edicao-aula/edicao-aula.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { EditorComponent } from './editor/editor.component';
     EmailComponent,
     EnviarEmailComponent,
     NovaSenhaComponent,
-    EditorComponent
+    EditorComponent,
+    EdicaoAulaComponent
   ],
   imports: [
     BrowserModule,
