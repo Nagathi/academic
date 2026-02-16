@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,9 @@ import com.camtuc.youtuc.dto.AulaDTO;
 import com.camtuc.youtuc.dto.VideoConteudoDTO;
 import com.camtuc.youtuc.record.ExcluirRecord;
 import com.camtuc.youtuc.service.AulaService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 @RequestMapping("/aula")
@@ -68,6 +72,16 @@ public class AulaController {
         return aulaService.adicionarVideo(videoDTO);
     }
 
+    @GetMapping("/mostra-aula/{id}")
+    public ResponseEntity<?> mostrarAula(
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String authHeader
+    ) {
+        String token = authHeader.replace("Bearer ", "");
+
+        return aulaService.mostrarAula(id, token);
+    }
+    
     @DeleteMapping(value = "/excluir")
     public ResponseEntity<?> excluirConteudo(@RequestBody ExcluirRecord excluirRecord) {
         return aulaService.excluirConteudo(excluirRecord.id(), excluirRecord.token());

@@ -7,5 +7,5 @@ import com.camtuc.youtuc.model.AulaConteudoModel;
 
 @Repository
 public interface AulaConteudoRepository extends CrudRepository<AulaConteudoModel, Long> {
-    
+    public Iterable<AulaConteudoModel> findAllByAulaId(Long aulaId);
 }

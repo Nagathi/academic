@@ -4,6 +4,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 import com.camtuc.youtuc.dto.ArquivoConteudoDTO;
 import com.camtuc.youtuc.dto.AulaDTO;
 import com.camtuc.youtuc.dto.VideoConteudoDTO;
+import com.camtuc.youtuc.dto.ViewAulaDTO;
+import com.camtuc.youtuc.dto.ViewConteudoDTO;
 import com.camtuc.youtuc.model.AulaConteudoModel;
 import com.camtuc.youtuc.model.AulaModel;
 import com.camtuc.youtuc.model.UsuarioModel;
@@ -101,6 +105,45 @@ public class AulaService {
         aulaConteudoRepository.save(aula);
 
         return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<?> mostrarAula(Long id, String token) {
+
+        String email = tokenService.validarToken(token);
+    
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+
+        AulaModel aula = aulaRepository.findById(id).orElse(null);
+        if(aula == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aula não encontrada.");
+        }
+
+        if(aula.getDisciplina().getUsuario().getId().equals(usuarioOptional.get().getId())){
+            ViewAulaDTO viewAulaDTO = new ViewAulaDTO();
+            viewAulaDTO.setId(aula.getId());
+            viewAulaDTO.setTitulo(aula.getTitulo());
+            viewAulaDTO.setDescricao(aula.getDescricao());
+
+            Iterable<AulaConteudoModel> aulaConteudos = aulaConteudoRepository.findAllByAulaId(aula.getId());
+            List<ViewConteudoDTO> conteudos = new ArrayList<ViewConteudoDTO>();
+
+            for (AulaConteudoModel conteudo : aulaConteudos) {
+                ViewConteudoDTO viewConteudoDTO = new ViewConteudoDTO();
+                viewConteudoDTO.setId(conteudo.getId());
+                viewConteudoDTO.setTitulo(conteudo.getTitulo());
+                viewConteudoDTO.setDescricao(conteudo.getDescricao());
+                viewConteudoDTO.setTipo(conteudo.getTipo());
+                viewConteudoDTO.setUrl(conteudo.getUrl());
+
+                conteudos.add(viewConteudoDTO);
+            }
+
+            viewAulaDTO.setConteudos(conteudos);
+
+            return ResponseEntity.ok(viewAulaDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para visualizar esta aula.");
+        }
     }
 
     public ResponseEntity<?> excluirConteudo(Long aulaId, String token) {
