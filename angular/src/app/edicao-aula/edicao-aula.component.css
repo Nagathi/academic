@@ -101,3 +101,19 @@
     cursor:pointer;
     font-weight:600;
 }
+
+.edit-arquivo{
+    gap: 50px;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    justify-content: center;
+    background:#e5e7eb;
+    border:none;
+    border-radius:8px;
+    width:36px;
+    height:36px;
+    cursor:pointer;
+    align-items:center;
+    justify-content:center;
+}

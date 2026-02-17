@@ -177,7 +177,7 @@
         <h3>{{ conteudo.titulo }}</h3>
         <p>{{ conteudo.descricao }}</p>
         <div class="card-footer">
-          <button class="btn-acessar">
+          <button class="btn-acessar" (click)="goToAulaEdicao(conteudo.id)">
             Editar
           </button>
         </div>

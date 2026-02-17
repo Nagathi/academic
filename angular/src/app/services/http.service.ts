@@ -381,4 +381,83 @@ export class HttpService {
         );
       });
     }
+
+    public editarTituloAula(id: number, titulo: string): Promise<string> {
+      const token = localStorage.getItem("token");
+
+      return new Promise<string>((resolve, reject) => {
+        this.http.put(`${this.apiUrl}/aula/novo-titulo/${id}`, {titulo}, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).subscribe(
+          (response) => resolve('200'),
+          (error: HttpErrorResponse) => {
+            if (error.status === 200) {
+              resolve('200');
+            } else if (error.status === 400) {
+              resolve('400');
+            } else if (error.status === 401) {
+              resolve('401');
+            } else {
+              reject('Erro inesperado');
+            }
+          }
+        );
+      });
+    }
+
+    public editarDescricaoAula(id: number, descricao: string): Promise<string> {
+      const token = localStorage.getItem("token");
+
+      return new Promise<string>((resolve, reject) => {
+        this.http.put(`${this.apiUrl}/aula/nova-descricao/${id}`, {descricao}, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).subscribe(
+          (response) => resolve('200'),
+          (error: HttpErrorResponse) => {
+            if (error.status === 200) {
+              resolve('200');
+            } else if (error.status === 400) {
+              resolve('400');
+            } else if (error.status === 401) {
+              resolve('401');
+            } else {
+              reject('Erro inesperado');
+            }
+          }
+        );
+      });
+    }
+
+    public enviarArquivoAula(id: number, arquivo: File, titulo: string, descricao: string): Promise<string> {
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append('arquivo', arquivo);
+      formData.append('titulo', titulo);
+      formData.append('descricao', descricao);
+
+      return new Promise<string>((resolve, reject) => {
+        this.http.post(`${this.apiUrl}/aula/novo-arquivo/${id}`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).subscribe(
+          (response) => resolve('200'),
+          (error: HttpErrorResponse) => {
+            if (error.status === 200) {
+              resolve('200');
+            } else if (error.status === 400) {
+              resolve('400');
+            } else if (error.status === 401) {
+              resolve('401');
+            } else {
+              reject('Erro inesperado');
+            }
+          }
+        );
+      });
+    }
   } 

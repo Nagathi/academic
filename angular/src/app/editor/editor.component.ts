@@ -161,4 +161,8 @@ export class EditorComponent {
       }
     );  
   }
+
+  goToAulaEdicao(id:number){
+    window.location.href = `/edit-aula?d=${id}`;
+  }
 }

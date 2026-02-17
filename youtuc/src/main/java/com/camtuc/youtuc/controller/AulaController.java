@@ -1,5 +1,7 @@
 package com.camtuc.youtuc.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +21,8 @@ import com.camtuc.youtuc.record.ExcluirRecord;
 import com.camtuc.youtuc.service.AulaService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -44,18 +49,20 @@ public class AulaController {
         return aulaService.cadastrarAula(aulaDTO);
     }
 
-    @PostMapping(value = "/novo-arquivo", consumes = "multipart/form-data")
+    @PostMapping(value = "/novo-arquivo/{id}", consumes = "multipart/form-data")
     public ResponseEntity<?> postArquivo(@RequestParam("titulo") String titulo,
                                          @RequestParam("descricao") String descricao,
-                                         @RequestParam("aula_id") Long aulaId,
-                                         @RequestParam("arquivo") MultipartFile arquivo) {
+                                         @PathVariable Long id,
+                                         @RequestPart("arquivo") MultipartFile arquivo,
+                                         @RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
         ArquivoConteudoDTO arquivoDTO = new ArquivoConteudoDTO();
         arquivoDTO.setTitulo(titulo);
         arquivoDTO.setDescricao(descricao);
-        arquivoDTO.setAulaId(aulaId);
+        arquivoDTO.setAulaId(id);
         arquivoDTO.setArquivo(arquivo);
 
-        return aulaService.adicionarArquivo(arquivoDTO);
+        return aulaService.adicionarArquivo(arquivoDTO, token);
     }
 
     @PostMapping(value = "/novo-video")
@@ -63,6 +70,7 @@ public class AulaController {
                                          @RequestParam("descricao") String descricao,
                                          @RequestParam("aula_id") Long aulaId,
                                          @RequestParam("video") String video) {
+        
         VideoConteudoDTO videoDTO = new VideoConteudoDTO();
         videoDTO.setTitulo(titulo);
         videoDTO.setDescricao(descricao);
@@ -85,6 +93,20 @@ public class AulaController {
     @DeleteMapping(value = "/excluir")
     public ResponseEntity<?> excluirConteudo(@RequestBody ExcluirRecord excluirRecord) {
         return aulaService.excluirConteudo(excluirRecord.id(), excluirRecord.token());
+    }
+
+    @PutMapping("/novo-titulo/{id}")
+    public ResponseEntity<?> atualizarTitulo(@PathVariable Long id, @RequestBody Map<String, String> requestBody, @RequestHeader("Authorization") String authHeader) {
+        String titulo = requestBody.get("titulo");
+        String token = authHeader.replace("Bearer ", "");
+        return aulaService.editarTituloAula(id, titulo, token);
+    }
+
+    @PutMapping("/nova-descricao/{id}")
+    public ResponseEntity<?> atualizarDescricao(@PathVariable Long id, @RequestBody Map<String, String> requestBody, @RequestHeader("Authorization") String authHeader) {
+        String descricao = requestBody.get("descricao");
+        String token = authHeader.replace("Bearer ", "");
+        return aulaService.editarDescricaoAula(id, descricao, token);
     }
     
 }

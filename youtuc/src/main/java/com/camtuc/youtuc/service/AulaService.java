@@ -53,7 +53,12 @@ public class AulaService {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<?> adicionarArquivo(ArquivoConteudoDTO arquivoDTO) {
+    public ResponseEntity<?> adicionarArquivo(ArquivoConteudoDTO arquivoDTO, String token) {
+        String email = tokenService.validarToken(token);
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         Long aulaId = arquivoDTO.getAulaId();
         Long disciplinaId = aulaRepository.findById(aulaId).get().getDisciplina().getId();
 
@@ -155,6 +160,44 @@ public class AulaService {
             AulaModel aula = aulaRepository.findById(aulaId).orElse(null);
             aulaRepository.delete(aula);
             return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
+        }
+    }
+
+    public ResponseEntity<?> editarTituloAula(Long aulaId, String novoTitulo, String token) {
+        String email = tokenService.validarToken(token);
+    
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+
+        if(usuarioOptional.isPresent()){
+            AulaModel aula = aulaRepository.findById(aulaId).orElse(null);
+            if(aula != null){
+                aula.setTitulo(novoTitulo);
+                aulaRepository.save(aula);
+                return ResponseEntity.ok().build();
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aula não encontrada.");
+            }
+        }else{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
+        }
+    }
+
+    public ResponseEntity<?> editarDescricaoAula(Long aulaId, String novaDescricao, String token) {
+        String email = tokenService.validarToken(token);
+    
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+
+        if(usuarioOptional.isPresent()){
+            AulaModel aula = aulaRepository.findById(aulaId).orElse(null);
+            if(aula != null){
+                aula.setDescricao(novaDescricao);
+                aulaRepository.save(aula);
+                return ResponseEntity.ok().build();
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aula não encontrada.");
+            }
         }else{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
         }

@@ -2,14 +2,16 @@
 
   <div class="top">
     <h1 class="titulo">
-      {{ aula.titulo }}
+      <label *ngIf="!editandoTitulo">{{ aula.titulo }}</label>
+      <input *ngIf="editandoTitulo" [(ngModel)]="aula.titulo" class="titulo-input" (keydown.enter)="salvarTitulo()" (keydown.escape)="cancelarTitulo()" autofocus>
       <button class="edit" (click)="editarTitulo()">
         <i class="material-icons">edit</i>
       </button>
     </h1>
 
     <p class="descricao">
-      {{ aula.descricao }}
+      <label *ngIf="!editandoDescricao">{{ aula.descricao }}</label>
+      <input *ngIf="editandoDescricao" [(ngModel)]="aula.descricao" class="descricao-input" (keydown.enter)="salvarDescricao()" (keydown.escape)="cancelarDescricao()" autofocus>
       <button class="edit small" (click)="editarDescricao()">
         <i class="material-icons">edit</i>
       </button>
@@ -20,13 +22,9 @@
 
   <div class="card">
 
-    <!-- MATERIAIS -->
     <div class="secao">
       <div class="secao-header">
         <h2>Materiais</h2>
-        <button class="edit">
-          <i class="material-icons">edit</i>
-        </button>
       </div>
 
       <ul class="lista">
@@ -38,16 +36,23 @@
         </li>
       </ul>
 
-      <button class="add" (click)="adicionarMaterial()">+ Adicionar material</button>
+      <button class="add" (click)="abrirSeletor()">+ Adicionar material</button>
+
+      <input type="file" #fileInput style="display:none" (change)="arquivoSelecionado($event)">
+      <div class="edit-arquivo">
+        <input type="text" [(ngModel)]="tituloArquivo" placeholder="Título do arquivo..." *ngIf="adicionandoArquivo" class="titulo-arquivo">
+        <input type="text" [(ngModel)]="descricaoArquivo" placeholder="Descreva o conteúdo..." *ngIf="adicionandoArquivo" class="descricao-arquivo"> 
+      </div>
+      <div *ngIf="arquivo">
+        <span>{{ arquivo.name }}</span>
+        <button (click)="enviarArquivo()">Enviar</button>
+        <button (click)="cancelarArquivo()">Cancelar</button>
+      </div>
     </div>
 
-    <!-- LINKS / VIDEOS -->
     <div class="secao">
       <div class="secao-header">
         <h2>Links</h2>
-        <button class="edit">
-          <i class="material-icons">edit</i>
-        </button>
       </div>
 
       <ul class="lista">

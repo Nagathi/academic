@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../services/http.service';
 
 @Component({
@@ -8,14 +8,23 @@ import { HttpService } from '../services/http.service';
 })
 export class EdicaoAulaComponent {
 
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
   aula: any = null;
   materiais: any[] = [];
   links: any[] = [];
+  editandoTitulo = false;
+  editandoDescricao = false;
+  editandoConteudo: any = null;
+  arquivo: File | null = null;
+  descricaoArquivo: string = '';
+  adicionandoArquivo = false;
+  tituloArquivo: string = '';
 
-  constructor(private httpService: HttpService) {}
+  constructor(private http: HttpService) {}
 
   ngOnInit() {
-    this.httpService.getAulaById(1).then(
+    this.http.getAulaById(1).then(
       (response: any) => {
         this.aula = response;
 
@@ -23,30 +32,64 @@ export class EdicaoAulaComponent {
           this.materiais = this.aula.conteudos.filter((c: any) => c.tipo === 'arquivo');
           this.links = this.aula.conteudos.filter((c: any) => c.tipo === 'video' || c.tipo === 'link');
         }
-      },
-      (error) => {
-        console.error('Erro ao obter aula:', error);
       }
     );
   }
 
   editarTitulo() {
-    
+    this.editandoTitulo = true;
+  }
+
+  salvarTitulo() {
+    this.editandoTitulo = false;
+    this.http.editarTituloAula(this.aula.id, this.aula.titulo);
+  }
+
+  cancelarTitulo() {
+    this.editandoTitulo = false;
   }
 
   editarDescricao() {
-    
+    this.editandoDescricao = true;
   }
 
-  editarConteudo(item: any) {
-    
+  salvarDescricao() {
+    this.editandoDescricao = false;
+    this.http.editarDescricaoAula(this.aula.id, this.aula.descricao);
   }
 
-  adicionarMaterial() {
-    
+  cancelarDescricao() {
+    this.editandoDescricao = false;
   }
 
-  adicionarLink() {
-    
+  editarConteudo(item: any) {}
+
+  abrirSeletor() {
+    this.fileInput.nativeElement.click();
   }
+
+  arquivoSelecionado(event: any) {
+    this.adicionandoArquivo = true;
+    const file = event.target.files[0];
+    if (file) {
+      this.arquivo = file;
+    }
+  }
+
+  cancelarArquivo() {
+    this.arquivo = null;
+    this.fileInput.nativeElement.value = '';
+  }
+
+  enviarArquivo() {
+    if (!this.arquivo) return;
+    this.http.enviarArquivoAula(this.aula.id, this.arquivo, this.tituloArquivo, this.descricaoArquivo).then(
+      (response: any) => {
+        this.materiais.push(response);
+        this.cancelarArquivo();
+      }
+    );
+  }
+
+  adicionarLink() {}
 }
