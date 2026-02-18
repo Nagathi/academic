@@ -21,9 +21,11 @@ import com.camtuc.youtuc.dto.ViewAulaDTO;
 import com.camtuc.youtuc.dto.ViewConteudoDTO;
 import com.camtuc.youtuc.model.AulaConteudoModel;
 import com.camtuc.youtuc.model.AulaModel;
+import com.camtuc.youtuc.model.DisciplinaModel;
 import com.camtuc.youtuc.model.UsuarioModel;
 import com.camtuc.youtuc.repository.AulaConteudoRepository;
 import com.camtuc.youtuc.repository.AulaRepository;
+import com.camtuc.youtuc.repository.DisciplinaRepository;
 import com.camtuc.youtuc.repository.UsuarioRepository;
 
 @Service
@@ -41,16 +43,40 @@ public class AulaService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public ResponseEntity<?> cadastrarAula(AulaDTO aulaDTO) {
+    @Autowired
+    private DisciplinaRepository disciplinaRepository;
+
+    public ResponseEntity<?> cadastrarAula(AulaDTO aulaDTO, String token) {
+        String email = tokenService.validarToken(token);
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        DisciplinaModel disciplina = disciplinaRepository.findById(aulaDTO.getDisciplinaId()).orElse(null);
+        if(disciplina == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Disciplina não encontrada.");
+        }
+
+         if(!disciplina.getUsuario().getId().equals(usuarioOptional.get().getId())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
+        }
+
         AulaModel aula = new AulaModel();
         aula.setTitulo(aulaDTO.getTitulo());
         aula.setDescricao(aulaDTO.getDescricao());
-        aula.setOrdem(aulaDTO.getOrdem());
+        aula.setOrdem(aulaRepository.countByDisciplinaId(aulaDTO.getDisciplinaId()) + 1);
+        aula.setDisciplina(disciplina);
         AulaModel resposta = aulaRepository.save(aula);
         if (resposta == null) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok().build();
+
+        AulaDTO respostaDTO = new AulaDTO();
+        respostaDTO.setId(resposta.getId());
+        respostaDTO.setTitulo(resposta.getTitulo());
+        respostaDTO.setDescricao(resposta.getDescricao());
+        return ResponseEntity.ok(respostaDTO);
     }
 
     public ResponseEntity<?> adicionarArquivo(ArquivoConteudoDTO arquivoDTO, String token) {
@@ -59,8 +85,18 @@ public class AulaService {
         if (usuarioOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+
         Long aulaId = arquivoDTO.getAulaId();
         Long disciplinaId = aulaRepository.findById(aulaId).get().getDisciplina().getId();
+
+        DisciplinaModel disciplina = disciplinaRepository.findById(disciplinaId).orElse(null);
+        if(disciplina == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Disciplina não encontrada.");
+        }
+
+         if(!disciplina.getUsuario().getId().equals(usuarioOptional.get().getId())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
+        }
 
         String diretorioAtual = System.getProperty("user.dir");
         String caminhoRelativo = "/youtuc/src/media/disciplinas/"+ "Disciplina" + disciplinaId + "/Aula" + aulaId;
@@ -98,7 +134,12 @@ public class AulaService {
         return ResponseEntity.badRequest().build();
     }
 
-    public ResponseEntity<?> adicionarVideo(VideoConteudoDTO videoDTO) {
+    public ResponseEntity<?> adicionarVideo(VideoConteudoDTO videoDTO, String token) {
+        String email = tokenService.validarToken(token);
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
         AulaConteudoModel aula = new AulaConteudoModel();
         aula.setTipo("video");
@@ -132,6 +173,11 @@ public class AulaService {
             Iterable<AulaConteudoModel> aulaConteudos = aulaConteudoRepository.findAllByAulaId(aula.getId());
             List<ViewConteudoDTO> conteudos = new ArrayList<ViewConteudoDTO>();
 
+            if(aulaConteudos == null){
+                viewAulaDTO.setConteudos(conteudos);
+                return ResponseEntity.ok(viewAulaDTO);
+            }
+
             for (AulaConteudoModel conteudo : aulaConteudos) {
                 ViewConteudoDTO viewConteudoDTO = new ViewConteudoDTO();
                 viewConteudoDTO.setId(conteudo.getId());
@@ -151,15 +197,58 @@ public class AulaService {
         }
     }
 
-    public ResponseEntity<?> excluirConteudo(Long aulaId, String token) {
+    public ResponseEntity<?> adicionarLink(Long aulaId, String titulo, String descricao, String url, String token) {
+        String email = tokenService.validarToken(token);
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        AulaConteudoModel aula = new AulaConteudoModel();
+        aula.setTipo("link");
+        aula.setTitulo(titulo);
+        aula.setDescricao(descricao);
+        aula.setUrl(url);
+        aula.setAula(aulaRepository.findById(aulaId).get());
+
+        aulaConteudoRepository.save(aula);
+
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<?> excluirAula(Long id, String token) {
         String email = tokenService.validarToken(token);
     
         Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
 
         if(usuarioOptional.isPresent()){
-            AulaModel aula = aulaRepository.findById(aulaId).orElse(null);
-            aulaRepository.delete(aula);
-            return ResponseEntity.ok().build();
+            AulaModel aula = aulaRepository.findById(id).orElse(null);
+
+            if(aula != null){   
+                aulaRepository.delete(aula);
+                return ResponseEntity.ok().build();
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aula não encontrada.");
+            }
+        }else{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
+        }
+    }
+
+    public ResponseEntity<?> excluirConteudo(Long id, String token) {
+        String email = tokenService.validarToken(token);
+    
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(email);
+
+        if(usuarioOptional.isPresent()){
+            AulaConteudoModel conteudo = aulaConteudoRepository.findById(id).orElse(null);
+
+            if(conteudo != null){   
+                aulaConteudoRepository.delete(conteudo);
+                return ResponseEntity.ok().build();
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conteúdo não encontrado.");
+            }
         }else{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para editar esta disciplina.");
         }

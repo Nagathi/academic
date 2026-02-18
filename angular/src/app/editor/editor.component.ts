@@ -9,16 +9,24 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent {
-  nomeDisciplina: string = '';
-  nomeProfessor: string = '';
-  anoMinistracao: number = 0;
-  fotoProfessor: string = '/assets/placeholder-professor.jpg';
   cursos: string[] = [];
+
+  fotoProfessor: string = '/assets/placeholder-professor.jpg';
+  nomeDisciplina: string = '';
   descricao: string = '';
+  nomeProfessor: string = '';
+  novoCurso: string = '';
+  novaAulaTitulo: string = '';
+  novaAulaDescricao: string = '';
+
+  anoMinistracao: number = 0;
+  
   editandoTitulo = false;
   editandoDescricao = false;
   editandoCursos = false;
-  novoCurso = '';
+  modalNovaAula = false;
+  
+
 
   cursosPossiveis = [
   { nome: 'Computação', valor: 'computacao' },
@@ -152,7 +160,7 @@ export class EditorComponent {
   excluirConteudo(conteudo:any){
     if(!confirm(`Tem certeza que deseja excluir o conteúdo "${conteudo.titulo}"?`)) return;
 
-    this.http.excluirConteudo(conteudo.id).then(
+    this.http.excluirAula(conteudo.id).then(
       (response) => {
         this.conteudos = this.conteudos.filter((c) => c.id !== conteudo.id);
       },
@@ -165,4 +173,40 @@ export class EditorComponent {
   goToAulaEdicao(id:number){
     window.location.href = `/edit-aula?d=${id}`;
   }
+
+  abrirModalNovaAula() {
+  this.modalNovaAula = true;
+}
+
+fecharModalNovaAla() {
+  this.modalNovaAula = false;
+  this.novaAulaTitulo = '';
+  this.novaAulaDescricao = '';
+}
+
+salvarNovaAula() {
+  const idDisciplina = Number(this.route.snapshot.queryParamMap.get('d')) || 0;
+
+  const titulo = this.novaAulaTitulo.trim();
+  const descricao = this.novaAulaDescricao.trim();
+
+  if (!titulo) return;
+
+  this.http.criarAula(idDisciplina, titulo, descricao).then(
+    (response: any) => {
+      const novaAula = {
+        id: response.id,
+        titulo: titulo,
+        descricao: descricao,
+        conteudos: []
+      };
+
+      this.conteudos.push(novaAula);
+      this.fecharModalNovaAla();
+    },
+    (error) => {
+      console.error('Erro ao criar nova aula:', error);
+    }
+  );
+}
 }

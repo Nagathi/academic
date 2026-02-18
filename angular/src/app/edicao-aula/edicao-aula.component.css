@@ -1,17 +1,15 @@
 .page{
     padding:40px;
-    background:#f5f6f8;
+    background:#f6f8fb;
     min-height:100vh;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:Inter, Arial;
 }
 
-.top{
-    text-align:center;
-}
+.top{text-align:center}
 
 .titulo{
-    font-size:32px;
-    color:#1e3a5f;
+    font-size:34px;
+    color:#0f172a;
     font-weight:700;
     display:inline-flex;
     align-items:center;
@@ -19,65 +17,73 @@
 }
 
 .descricao{
-    margin-top:8px;
-    color:#666;
+    margin-top:10px;
+    color:#64748b;
     display:flex;
     justify-content:center;
-    align-items:center;
     gap:8px;
 }
 
 .linha{
     height:2px;
-    background:#1f8f3a;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
     margin:30px 0;
 }
 
 .card{
-    background:#eef1f6;
-    border-radius:14px;
+    background:#ffffff;
+    border-radius:18px;
     padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.06);
 }
 
-.secao{
-    margin-bottom:30px;
-}
+.secao{margin-bottom:40px}
 
 .secao-header{
     display:flex;
     align-items:center;
-    gap:10px;
-    margin-bottom:10px;
+    justify-content:space-between;
+    margin-bottom:14px;
 }
 
 .secao-header h2{
-    color:#1e3a5f;
+    color:#0f172a;
+    font-size:20px;
 }
 
-.texto{
-    color:#444;
-    line-height:1.6;
-}
-
-.lista{
-    list-style:none;
-    padding:0;
-}
+.lista{list-style:none;padding:0}
 
 .lista li{
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    background:#fff;
-    padding:12px 14px;
-    border-radius:10px;
+    align-items:center;
+    background:#f9fafb;
+    padding:14px;
+    border-radius:12px;
     margin-bottom:10px;
+    transition:.2s;
+}
+
+.lista li:hover{
+    background:#f1f5f9;
+    transform:scale(1.01);
+}
+
+.item-info{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.item-info span{
+    font-size:12px;
+    color:#64748b;
 }
 
 .edit{
-    background:#e5e7eb;
+    background:#e2e8f0;
     border:none;
-    border-radius:8px;
+    border-radius:10px;
     width:36px;
     height:36px;
     cursor:pointer;
@@ -86,34 +92,90 @@
     justify-content:center;
 }
 
-.edit.small{
-    width:30px;
-    height:30px;
-}
+.edit:hover{background:#cbd5e1}
 
 .add{
-    margin-top:10px;
-    background:#1f8f3a;
+    margin-top:12px;
+    background:#22c55e;
     color:white;
     border:none;
-    padding:10px 16px;
-    border-radius:10px;
+    padding:12px 18px;
+    border-radius:12px;
     cursor:pointer;
     font-weight:600;
+    transition:.2s;
 }
 
-.edit-arquivo{
-    gap: 50px;
-    display: flex;
-    flex-direction: row;
-    margin: auto;
-    justify-content: center;
-    background:#e5e7eb;
+.add:hover{
+    background:#16a34a;
+    transform:scale(1.03);
+}
+
+.input{
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #e5e7eb;
+    width:100%;
+}
+
+.form-linha{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.upload-box{
+    margin-top:10px;
+    background:#f1f5f9;
+    padding:12px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.btn{
+    padding:8px 14px;
     border:none;
     border-radius:8px;
+    cursor:pointer;
+}
+
+.btn.ok{background:#22c55e;color:white}
+.btn.cancel{background:#ef4444;color:white}
+
+.toast{
+    position:fixed;
+    bottom:30px;
+    right:30px;
+    background:#0f172a;
+    color:white;
+    padding:14px 20px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    animation:fade 0.3s;
+}
+
+.delete{
+    background:#fee2e2;
+    border:none;
+    border-radius:10px;
     width:36px;
     height:36px;
     cursor:pointer;
+    display:flex;
     align-items:center;
     justify-content:center;
+    color:#dc2626;
+}
+
+.delete:hover{
+    background:#fecaca;
+    transform:scale(1.05);
+}
+
+
+@keyframes fade{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1}
 }

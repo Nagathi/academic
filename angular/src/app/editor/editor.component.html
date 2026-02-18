@@ -183,9 +183,34 @@
         </div>
       </div>
 
-      <button class="btn-nova-aula"> + Nova Aula</button>
+      <button (click)="abrirModalNovaAula()" class="btn-nova-aula"> + Nova Aula</button>
 
     </div>
   </div>
 
 </div>
+
+<div class="modal-bg" *ngIf="modalNovaAula">
+  <div class="modal">
+    
+    <h2>Nova Aula</h2>
+
+    <label>Título</label>
+    <input type="text" [(ngModel)]="novaAulaTitulo">
+
+    <label>Descrição</label>
+    <textarea [(ngModel)]="novaAulaDescricao"></textarea>
+
+    <div class="actions">
+      <button class="cancelar" (click)="fecharModalNovaAla()">
+        Cancelar
+      </button>
+
+      <button class="salvar" (click)="salvarNovaAula()">
+        Criar Aula
+      </button>
+    </div>
+
+  </div>
+</div>
+

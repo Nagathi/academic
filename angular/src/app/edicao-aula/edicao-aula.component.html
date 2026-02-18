@@ -3,7 +3,8 @@
   <div class="top">
     <h1 class="titulo">
       <label *ngIf="!editandoTitulo">{{ aula.titulo }}</label>
-      <input *ngIf="editandoTitulo" [(ngModel)]="aula.titulo" class="titulo-input" (keydown.enter)="salvarTitulo()" (keydown.escape)="cancelarTitulo()" autofocus>
+      <input *ngIf="editandoTitulo" [(ngModel)]="aula.titulo" class="titulo-input"
+        (keydown.enter)="salvarTitulo()" (keydown.escape)="cancelarTitulo()" autofocus>
       <button class="edit" (click)="editarTitulo()">
         <i class="material-icons">edit</i>
       </button>
@@ -11,7 +12,8 @@
 
     <p class="descricao">
       <label *ngIf="!editandoDescricao">{{ aula.descricao }}</label>
-      <input *ngIf="editandoDescricao" [(ngModel)]="aula.descricao" class="descricao-input" (keydown.enter)="salvarDescricao()" (keydown.escape)="cancelarDescricao()" autofocus>
+      <input *ngIf="editandoDescricao" [(ngModel)]="aula.descricao" class="descricao-input"
+        (keydown.enter)="salvarDescricao()" (keydown.escape)="cancelarDescricao()" autofocus>
       <button class="edit small" (click)="editarDescricao()">
         <i class="material-icons">edit</i>
       </button>
@@ -22,16 +24,19 @@
 
   <div class="card">
 
+    <!-- MATERIAIS -->
     <div class="secao">
       <div class="secao-header">
         <h2>Materiais</h2>
       </div>
 
       <ul class="lista">
-        <li *ngFor="let m of materiais">
-          {{ m.titulo }}
-          <button class="edit small" (click)="editarConteudo(m)">
-            <i class="material-icons">edit</i>
+        <li *ngFor="let m of materiais; let i = index">
+          <div class="item-info">
+            <strong>{{ m.titulo }}</strong>
+          </div>
+          <button class="delete" (click)="removerMaterial(i)">
+            <i class="material-icons">delete</i>
           </button>
         </li>
       </ul>
@@ -39,33 +44,79 @@
       <button class="add" (click)="abrirSeletor()">+ Adicionar material</button>
 
       <input type="file" #fileInput style="display:none" (change)="arquivoSelecionado($event)">
-      <div class="edit-arquivo">
-        <input type="text" [(ngModel)]="tituloArquivo" placeholder="Título do arquivo..." *ngIf="adicionandoArquivo" class="titulo-arquivo">
-        <input type="text" [(ngModel)]="descricaoArquivo" placeholder="Descreva o conteúdo..." *ngIf="adicionandoArquivo" class="descricao-arquivo"> 
+
+      <div class="form-linha" *ngIf="adicionandoArquivo">
+        <input type="text" [(ngModel)]="tituloArquivo" placeholder="Título do arquivo..." class="input">
+        <input type="text" [(ngModel)]="descricaoArquivo" placeholder="Descrição..." class="input">
       </div>
-      <div *ngIf="arquivo">
+
+      <div class="upload-box" *ngIf="arquivo">
         <span>{{ arquivo.name }}</span>
-        <button (click)="enviarArquivo()">Enviar</button>
-        <button (click)="cancelarArquivo()">Cancelar</button>
+        <div class="acoes">
+          <button class="btn ok" (click)="enviarArquivo()">Enviar</button>
+          <button class="btn cancel" (click)="cancelarArquivo()">Cancelar</button>
+        </div>
       </div>
     </div>
 
+    <!-- VIDEOS -->
     <div class="secao">
       <div class="secao-header">
-        <h2>Links</h2>
+        <h2>Vídeos</h2>
       </div>
 
       <ul class="lista">
-        <li *ngFor="let l of links">
-          {{ l.url }}
-          <button class="edit small" (click)="editarConteudo(l)">
-            <i class="material-icons">edit</i>
+        <li *ngFor="let v of links; let i = index">
+          <div class="item-info">
+            <strong>{{ v.titulo || 'Vídeo' }}</strong>
+            <span>{{ v.url }}</span>
+          </div>
+          <button class="delete" (click)="removerVideo(i)">
+            <i class="material-icons">delete</i>
           </button>
         </li>
       </ul>
 
-      <button class="add" (click)="adicionarLink()">+ Adicionar link</button>
+      <input type="text" [(ngModel)]="novaUrl" placeholder="URL do vídeo..." *ngIf="adicionandoLink" class="input">
+      <div class="form-linha" *ngIf="adicionandoLink">
+        <input type="text" [(ngModel)]="tituloLink" placeholder="Título do vídeo..." class="input">
+        <input type="text" [(ngModel)]="descricaoLink" placeholder="Descrição..." class="input">
+      </div>
+
+      <button class="add" (click)="adicionarLink()">+ Adicionar vídeo</button>
+    </div>
+
+    <!-- LINKS EXTERNOS -->
+    <div class="secao">
+      <div class="secao-header">
+        <h2>Links úteis</h2>
+      </div>
+
+      <ul class="lista">
+        <li *ngFor="let l of linksExternos; let i = index">
+          <div class="item-info">
+            <strong>{{ l.titulo }}</strong>
+            <span>{{ l.url }}</span>
+          </div>
+          <button class="delete" (click)="removerLinkExterno(i)">
+            <i class="material-icons">delete</i>
+          </button>
+        </li>
+      </ul>
+
+      <div class="form-linha" *ngIf="adicionandoLinkExterno">
+        <input type="text" [(ngModel)]="novoLinkExterno" placeholder="https://..." class="input">
+        <input type="text" [(ngModel)]="tituloLinkExterno" placeholder="Título..." class="input">
+        <input type="text" [(ngModel)]="descricaoLinkExterno" placeholder="Descrição..." class="input">
+      </div>
+
+      <button class="add" (click)="criarLinkExterno()">+ Adicionar link</button>
     </div>
 
   </div>
+
+  <div class="toast" *ngIf="toast">
+    {{ toast }}
+  </div>
+
 </div>

@@ -345,11 +345,15 @@ export class HttpService {
     });
   }
 
-  excluirConteudo(id: number): Promise<string> {
+  excluirAula(id: number): Promise<string> {
     const token = localStorage.getItem("token");
 
     return new Promise<string>((resolve, reject) => {
-      this.http.delete(`${this.apiUrl}/aula/excluir`, {body: {id, token}}).subscribe(
+      this.http.delete(`${this.apiUrl}/aula/excluir-aula/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).subscribe(
         (response) => {
           resolve('200');
         },
@@ -432,6 +436,22 @@ export class HttpService {
       });
     }
 
+    public criarAula(id: number, titulo: string, descricao: string): Promise<any> {
+      const token = localStorage.getItem("token");
+      const payload = {titulo, descricao};
+
+      return new Promise((resolve, reject) => {
+        this.http.post(`${this.apiUrl}/aula/nova-aula/${id}`, payload, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).subscribe(
+          (response) => resolve(response),
+          (error) => reject(error)
+        );
+      })
+    }
+
     public enviarArquivoAula(id: number, arquivo: File, titulo: string, descricao: string): Promise<string> {
       const token = localStorage.getItem("token");
       const formData = new FormData();
@@ -441,6 +461,109 @@ export class HttpService {
 
       return new Promise<string>((resolve, reject) => {
         this.http.post(`${this.apiUrl}/aula/novo-arquivo/${id}`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).subscribe(
+          (response) => resolve('200'),
+          (error: HttpErrorResponse) => {
+            if (error.status === 200) {
+              resolve('200');
+            } else if (error.status === 400) {
+              resolve('400');
+            } else if (error.status === 401) {
+              resolve('401');
+            } else {
+              reject('Erro inesperado');
+            }
+          }
+        );
+      });
+    }
+
+    public adicionarLinkAula(id: number, video: string, titulo: string, descricao: string): Promise<string> {
+      const token = localStorage.getItem("token");
+      const payload = { video, titulo, descricao };
+
+      return new Promise<string>((resolve, reject) => {
+        this.http.post(`${this.apiUrl}/aula/novo-video/${id}`, payload, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).subscribe(
+          (response) => resolve('200'),
+          (error: HttpErrorResponse) => {
+            if (error.status === 200) {
+              resolve('200');
+            } else if (error.status === 400) {
+              resolve('400');
+            } else if (error.status === 401) {
+              resolve('401');
+            } else {
+              reject('Erro inesperado');
+            }
+          }
+        );
+      });
+    }
+
+    public adicionarLinkExternoAula(id: number, url: string, titulo: string, descricao: string): Promise<string> {
+      const token = localStorage.getItem("token");
+      const payload = { url, titulo, descricao };
+
+      return new Promise<string>((resolve, reject) => {
+        this.http.post(`${this.apiUrl}/aula/novo-link/${id}`, payload, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).subscribe(
+          (response) => resolve('200'),
+          (error: HttpErrorResponse) => {
+            if (error.status === 200) {
+              resolve('200');
+            } else if (error.status === 400) {
+              resolve('400');
+            } else if (error.status === 401) {
+              resolve('401');
+            } else {
+              reject('Erro inesperado');
+            }
+          }
+        );
+      });
+    }
+
+    public editarLinkExternoAula(id: number, url: string, titulo: string, descricao: string): Promise<string> {
+      const token = localStorage.getItem("token");
+      const payload = { url, titulo, descricao };
+
+      return new Promise<string>((resolve, reject) => {
+        this.http.put(`${this.apiUrl}/aula/editar-link-externo/${id}`, payload, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).subscribe(
+          (response) => resolve('200'),
+          (error: HttpErrorResponse) => {
+            if (error.status === 200) {
+              resolve('200');
+            } else if (error.status === 400) {
+              resolve('400');
+            } else if (error.status === 401) {
+              resolve('401');
+            } else {
+              reject('Erro inesperado');
+            }
+          }
+        );
+      });
+    }
+
+    removerConteudo(id: number): Promise<string> {
+      const token = localStorage.getItem("token");
+
+      return new Promise<string>((resolve, reject) => {
+        this.http.delete(`${this.apiUrl}/aula/excluir/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

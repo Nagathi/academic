@@ -50,4 +50,22 @@ export class DisciplinaComponent {
     };
     return icons[tipo] || 'fas fa-file';
   }
+
+  formatarCurso(nome: string): string {
+  if (!nome) return '';
+    const mapa: any = {
+      computacao: 'Computação',
+      ambiental: 'Ambiental',
+      civil: 'Civil',
+      eletrica: 'Elétrica',
+      mecanica: 'Mecânica'
+    };
+
+    const chave = nome.toLowerCase().trim();
+
+    if (mapa[chave]) return mapa[chave];
+
+    return chave.charAt(0).toUpperCase() + chave.slice(1);
+  }
+
 }

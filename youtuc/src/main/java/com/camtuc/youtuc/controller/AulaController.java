@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.camtuc.youtuc.dto.ArquivoConteudoDTO;
 import com.camtuc.youtuc.dto.AulaDTO;
 import com.camtuc.youtuc.dto.VideoConteudoDTO;
-import com.camtuc.youtuc.record.ExcluirRecord;
 import com.camtuc.youtuc.service.AulaService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,20 +32,18 @@ public class AulaController {
     @Autowired
     private AulaService aulaService;
 
-    @PostMapping("/nova-aula")
-    private ResponseEntity<?> cadastrarAula(@RequestParam("titulo") String titulo,
-                                            @RequestParam("descricao") String descricao,
-                                            @RequestParam("disciplina_id") Long disciplinaId,
-                                            @RequestParam("ordem") Integer ordem) {
-
+    @PostMapping("/nova-aula/{id}")
+    private ResponseEntity<?> cadastrarAula(@PathVariable Long id,
+                                            @RequestBody Map<String, String> requestBody,
+                                            @RequestHeader("Authorization") String authHeader) {
+        
+        String token = authHeader.replace("Bearer ", "");
         AulaDTO aulaDTO = new AulaDTO();
-        aulaDTO.setTitulo(titulo);
-        aulaDTO.setDescricao(descricao);
-        aulaDTO.setDisciplinaId(disciplinaId);
-        aulaDTO.setOrdem(ordem);
+        aulaDTO.setTitulo(requestBody.get("titulo"));
+        aulaDTO.setDescricao(requestBody.get("descricao"));
+        aulaDTO.setDisciplinaId(id);
 
-
-        return aulaService.cadastrarAula(aulaDTO);
+        return aulaService.cadastrarAula(aulaDTO, token);
     }
 
     @PostMapping(value = "/novo-arquivo/{id}", consumes = "multipart/form-data")
@@ -65,19 +62,22 @@ public class AulaController {
         return aulaService.adicionarArquivo(arquivoDTO, token);
     }
 
-    @PostMapping(value = "/novo-video")
-    public ResponseEntity<?> postVideo(@RequestParam("titulo") String titulo,
-                                         @RequestParam("descricao") String descricao,
-                                         @RequestParam("aula_id") Long aulaId,
-                                         @RequestParam("video") String video) {
+    @PostMapping(value = "/novo-video/{id}")
+    public ResponseEntity<?> postVideo( @PathVariable Long id,
+                                        @RequestHeader("Authorization") String authHeader,
+                                        @RequestBody Map<String, String> requestBody) {
+        String token = authHeader.replace("Bearer ", "");
         
+        String titulo = requestBody.get("titulo");
+        String descricao = requestBody.get("descricao");
+        String video = requestBody.get("video");
         VideoConteudoDTO videoDTO = new VideoConteudoDTO();
         videoDTO.setTitulo(titulo);
         videoDTO.setDescricao(descricao);
-        videoDTO.setAulaId(aulaId);
+        videoDTO.setAulaId(id);
         videoDTO.setVideo(video);
 
-        return aulaService.adicionarVideo(videoDTO);
+        return aulaService.adicionarVideo(videoDTO, token);
     }
 
     @GetMapping("/mostra-aula/{id}")
@@ -86,13 +86,35 @@ public class AulaController {
             @RequestHeader("Authorization") String authHeader
     ) {
         String token = authHeader.replace("Bearer ", "");
+        System.out.println("Token recebido: " + token);
+        System.out.println("ID da aula: " + id);
 
         return aulaService.mostrarAula(id, token);
     }
+
+    @PostMapping("/novo-link/{id}")
+    public ResponseEntity<?> novoLink(@PathVariable Long id,
+                                      @RequestHeader("Authorization") String authHeader,
+                                      @RequestBody Map<String, String> requestBody) {
+            String token = authHeader.replace("Bearer ", "");
+            
+            String titulo = requestBody.get("titulo");
+            String descricao = requestBody.get("descricao");
+            String url = requestBody.get("url");
     
-    @DeleteMapping(value = "/excluir")
-    public ResponseEntity<?> excluirConteudo(@RequestBody ExcluirRecord excluirRecord) {
-        return aulaService.excluirConteudo(excluirRecord.id(), excluirRecord.token());
+            return aulaService.adicionarLink(id, titulo, descricao, url, token);
+    }
+
+    @DeleteMapping("/excluir-aula/{id}")
+    public ResponseEntity<?> excluirAula(@PathVariable Long id, @RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        return aulaService.excluirAula(id, token);
+    }
+    
+    @DeleteMapping(value = "/excluir/{id}")
+    public ResponseEntity<?> excluirConteudo(@PathVariable Long id, @RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        return aulaService.excluirConteudo(id, token);
     }
 
     @PutMapping("/novo-titulo/{id}")

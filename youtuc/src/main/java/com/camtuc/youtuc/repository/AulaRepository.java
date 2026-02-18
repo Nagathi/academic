@@ -11,4 +11,5 @@ import com.camtuc.youtuc.model.DisciplinaModel;
 @Repository
 public interface AulaRepository extends CrudRepository<AulaModel, Long> {
     List<AulaModel> findAulasByDisciplina(DisciplinaModel disciplina);
+    int countByDisciplinaId(Long disciplinaId);
 }
