@@ -1,1 +1,83 @@
-<p>aula works!</p>
+<div class="page">
+
+  <div *ngIf="loading" class="loading">
+    Carregando aula...
+  </div>
+
+  <div *ngIf="erro" class="erro">
+    {{ erro }}
+  </div>
+
+  <div *ngIf="aula && !loading" class="layout">
+
+    <!-- PLAYER -->
+    <div class="main-content">
+
+      <div class="video-wrapper" *ngIf="videoEmbed">
+        <iframe
+          class="player"
+          [src]="videoEmbed"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="video-details">
+        <h1>{{ videoAtual?.titulo }}</h1>
+        <p>{{ videoAtual?.descricao }}</p>
+      </div>
+
+      <!-- MATERIAIS -->
+      <div class="section" *ngIf="materiais.length">
+        <h3>Materiais</h3>
+
+        <div class="material-card" *ngFor="let m of materiais">
+          <div class="icon">📄</div>
+          <div class="info">
+            <h4>{{ m.titulo }}</h4>
+            <p>{{ m.descricao }}</p>
+            <a [href]="apiUrl + m.url" target="_blank">Baixar</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINKS -->
+      <div class="section" *ngIf="links.length">
+        <h3>Links Úteis</h3>
+
+        <div class="link-card" *ngFor="let l of links">
+          <div class="icon">🔗</div>
+          <div class="info">
+            <h4>{{ l.titulo }}</h4>
+            <p>{{ l.descricao }}</p>
+            <a [href]="l.url" target="_blank">Abrir</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <h3>Conteúdo da Aula</h3>
+
+      <div
+        class="video-item"
+        *ngFor="let v of videos"
+        (click)="selecionarVideo(v)"
+        [class.active]="v === videoAtual">
+
+        <span class="play">▶</span>
+        <div>
+          <h4>{{ v.titulo }}</h4>
+          <p>{{ v.descricao }}</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

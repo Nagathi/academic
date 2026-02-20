@@ -11,6 +11,7 @@ import { EnviarEmailComponent } from './enviar-email/enviar-email.component';
 import { NovaSenhaComponent } from './nova-senha/nova-senha.component';
 import { EditorComponent } from './editor/editor.component';
 import { EdicaoAulaComponent } from './edicao-aula/edicao-aula.component';
+import { AulaComponent } from './aula/aula.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,8 @@ const routes: Routes = [
   { path: 'new-password', component: NovaSenhaComponent },
   { path: 'editor', component: EditorComponent },
   { path: 'edit-aula', component: EdicaoAulaComponent },
+  { path: 'aula', component: AulaComponent },
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({

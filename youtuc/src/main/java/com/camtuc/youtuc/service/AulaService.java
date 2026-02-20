@@ -86,6 +86,8 @@ public class AulaService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
+        System.out.println(arquivoDTO.getAulaId());
+
         Long aulaId = arquivoDTO.getAulaId();
         Long disciplinaId = aulaRepository.findById(aulaId).get().getDisciplina().getId();
 
@@ -113,6 +115,8 @@ public class AulaService {
             String uniqueImageName = UUID.randomUUID().toString() + "_" + arquivoDTO.getArquivo().getOriginalFilename();
 
             Path destinoVideo = Path.of(uploadVideo, uniqueImageName);
+
+            String destinoRelativo = "/disciplinas/Disciplina" + disciplinaId + "/Aula" + aulaId + "/" + uniqueImageName;
             try {
                 Files.copy(arquivoDTO.getArquivo().getInputStream(), destinoVideo, StandardCopyOption.REPLACE_EXISTING);
 
@@ -120,7 +124,7 @@ public class AulaService {
                 aula.setTipo("arquivo");
                 aula.setTitulo(arquivoDTO.getArquivo().getOriginalFilename());
                 aula.setDescricao(arquivoDTO.getDescricao());
-                aula.setUrl(destinoVideo.toString());
+                aula.setUrl(destinoRelativo);
                 aula.setAula(aulaRepository.findById(arquivoDTO.getAulaId()).get());
                 
                 aulaConteudoRepository.save(aula);

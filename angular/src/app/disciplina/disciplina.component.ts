@@ -68,4 +68,9 @@ export class DisciplinaComponent {
     return chave.charAt(0).toUpperCase() + chave.slice(1);
   }
 
+  acessarConteudo(conteudo: any) {
+    const id = conteudo.id;
+    window.location.href = `/aula?a=${id}`;
+  }
+
 }

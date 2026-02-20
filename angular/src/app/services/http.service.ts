@@ -45,6 +45,10 @@ export class HttpService {
     });
   }
 
+  getUrl(): string {
+    return this.apiUrl;
+  }
+
   autorizar(){
     const token = localStorage.getItem("token");
     this.http.post(`${this.apiUrl}/auth/authorization/${token}`, {}).subscribe(
